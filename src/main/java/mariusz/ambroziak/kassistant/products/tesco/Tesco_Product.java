@@ -1,5 +1,8 @@
 package mariusz.ambroziak.kassistant.products.tesco;
 
+import org.json.JSONObject;
+
+
 public class Tesco_Product extends ProductData{
 
 
@@ -19,6 +22,8 @@ public class Tesco_Product extends ProductData{
 	public void setSuperdepartment(String superdepartment) {
 		this.superdepartment = superdepartment;
 	}
+	
+	
 	public Tesco_Product(String name, String detailsUrl, String description, String quantityString, String department,
 			String superdepartment) {
 		super();
@@ -29,6 +34,28 @@ public class Tesco_Product extends ProductData{
 		this.department = department;
 		this.superdepartment = superdepartment;
 	}
+	
+	@Override
+	public void updateMetadata() {
+		JSONObject object=new JSONObject(this.metadata);
+		object.put(MetadataConstants.quantityStringNameJsonName, quantityString);
+		object.put(MetadataConstants.superdepartmentNameJsonName, superdepartment);
+		
+		this.metadata=object.toString();
+	}
+	@Override
+	public void setMetadata(String metadata) {
+		super.setMetadata(metadata);
+		JSONObject object=new JSONObject(this.metadata);
+		this.superdepartment=object.getString(MetadataConstants.superdepartmentNameJsonName);
+		this.quantityString=object.getString(MetadataConstants.quantityStringNameJsonName);
+		
+		
+		
+	}
+	
+	
+	
 	
 
 }

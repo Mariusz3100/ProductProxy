@@ -5,8 +5,20 @@ public abstract class ProductData {
     protected String detailsUrl;
     protected String description;
     protected String department;
+    protected String metadata;
 
-    public String getName() {
+    
+    public String getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(String metadata) {
+		this.metadata = metadata;
+	}
+
+	public abstract void updateMetadata();
+	
+	public String getName() {
         return name;
     }
 
@@ -37,4 +49,6 @@ public abstract class ProductData {
     public void setDepartment(String department) {
         this.department = department;
     }
+    
+    
 }

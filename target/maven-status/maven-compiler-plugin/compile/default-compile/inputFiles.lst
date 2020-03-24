@@ -1,6 +1,7 @@
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/Tesco_Product.java
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoDetailsApiClientService.java
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/ProductData.java
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoProxyController.java
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoApiClientService.java
-/home/spike/development/mgr/workspaces/eclipseWorkspaces/tescoProxy/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/RestServiceApplication.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoProxyController.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/Tesco_Product.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/ProductData.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoDetailsApiClientService.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/ai/categorisation/MetadataConstants.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/TescoApiClientService.java
+/home/spike/development/mgr/originalFiles/ProxyTescoService/src/main/java/mariusz/ambroziak/kassistant/products/tesco/RestServiceApplication.java
