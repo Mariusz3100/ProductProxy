@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 9
+Implementation-Title: rest-service
+Implementation-Version: 0.0.1-SNAPSHOT
+Main-Class: mariusz.ambroziak.kassistant.products.tesco.RestServiceApp
+ lication
+Created-By: Maven Integration for Eclipse
+
