@@ -7,6 +7,9 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
+import mariusz.ambroziak.kassistant.products.dao.ProductDAO;
+import mariusz.ambroziak.kassistant.products.model.ProductData;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -33,10 +36,12 @@ public class TescoDetailsApiClientService {
 	
 	@Autowired
 	private ResourceLoader resourceLoader;
-
+	
+	@Autowired
+	private ProductDAO productDao;
 
 	public Map<String,String> map;
-
+	
 	
 	
 	public TescoDetailsApiClientService(ResourceLoader resourceLoader) {

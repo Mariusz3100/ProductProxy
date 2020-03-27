@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import mariusz.ambroziak.kassistant.products.tesco1.TescoApiClientService;
+
 @RestController
 public class TescoProxyController {
 
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
 
+	
+	
+	
+	
 	@Autowired
 	TescoApiClientService searchService;
 

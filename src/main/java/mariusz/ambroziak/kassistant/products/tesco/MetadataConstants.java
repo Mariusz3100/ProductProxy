@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.products.tesco;
 
+
+
 public class MetadataConstants {
 //	public static final String categoryJsonName1="categoryName1";
 //	public static final String categoryJsonName2="categoryName2";
