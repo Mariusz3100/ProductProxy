@@ -9,15 +9,17 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>tesco-proxy</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>rest-service</name>
+	<groupId>mariusz.ambroziak.kassistant</groupId>
+	<artifactId>DataSourcesModule</artifactId>
+	<version>0.1.0</version>
+	<name>DataSources</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<start-class>mariusz.ambroziak.kassistant.products.tesco.RestServiceApplication</start-class>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -57,17 +59,31 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
+<!--        <dependency>-->
+<!--			<groupId>mariusz.ambroziak.kassistant</groupId>-->
+<!--            <artifactId>DataObjects</artifactId>-->
+<!--            <version>[0.1.0]</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
 
+    </dependencies>
 
-	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.gwt.xml</include>
+				</includes>
+			</resource>
+
+
+		</resources>
+
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<executions>
@@ -93,5 +109,6 @@
 
 		</plugins>
 	</build>
+
 
 </project>
