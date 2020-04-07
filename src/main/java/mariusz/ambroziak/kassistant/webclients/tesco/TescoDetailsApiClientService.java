@@ -279,6 +279,18 @@ public class TescoDetailsApiClientService {
 		}
 	}
 
+	public Tesco_Product getFullDataFromDbOrApi(String url) {
+
+		//Tesco_Product fromDb=productDAO.list();
+
+
+		Tesco_Product fromApi=getDetailAndSearchDataProductByUrl(url);
+
+
+		return fromApi;
+
+
+	}
 
 
 	public Tesco_Product getDetailAndSearchDataProductByUrl(String url) {
