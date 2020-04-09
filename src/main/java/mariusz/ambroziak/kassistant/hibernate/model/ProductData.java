@@ -13,9 +13,9 @@ public abstract class ProductData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long pd_id;
+    protected String url;
 
     protected String name;
-    protected String details_url;
     protected String description;
     protected String department;
 
@@ -49,9 +49,15 @@ public abstract class ProductData {
         this.pd_id = pd_id;
     }
 
+    public String getUrl() {
+        return url;
+    }
 
-	
-	public String getName() {
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getName() {
         return name;
     }
 
@@ -59,13 +65,6 @@ public abstract class ProductData {
         this.name = name;
     }
 
-    public String getDetailsUrl() {
-        return details_url;
-    }
-
-    public void setDetailsUrl(String detailsUrl) {
-        this.details_url = detailsUrl;
-    }
 
     public String getDescription() {
         return description;
@@ -94,7 +93,7 @@ public abstract class ProductData {
 	public ProductData(String name, String detailsUrl, String description, String department) {
 		super();
 		this.name = name;
-		this.details_url = detailsUrl;
+		this.url = detailsUrl;
 		this.description = description;
 		this.department = department;
 	}
