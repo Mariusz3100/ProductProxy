@@ -1,16 +1,13 @@
 package mariusz.ambroziak.kassistant.webclients.tesco;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.*;
 
-import mariusz.ambroziak.kassistant.enums.ProductType;
+import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
+import mariusz.ambroziak.kassistant.hibernate.repository.ProductRepository;
+import mariusz.ambroziak.kassistant.hibernate.repository.TescoProductRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
 import mariusz.ambroziak.kassistant.utils.ProblemLogger;
-import mariusz.ambroziak.kassistant.hibernate.dao.ProductDAO;
 
 
 import org.json.JSONArray;
@@ -49,15 +46,15 @@ public class TescoDetailsApiClientService {
 	private ResourceLoader resourceLoader;
 	private Resource inputFileResource;
 	private TescoApiClientService searchService;
-	private ProductDAO productDAO;
+	private TescoProductRepository productRepository;
 	public Map<String,String> map;
 
 	@Autowired
-	public TescoDetailsApiClientService(ResourceLoader resourceLoader, TescoApiClientService searchService, ProductDAO productDAO) {
+	public TescoDetailsApiClientService(ResourceLoader resourceLoader, TescoApiClientService searchService, TescoProductRepository productRepository) {
 		this.resourceLoader = resourceLoader;
 		this.inputFileResource = this.resourceLoader.getResource("classpath:/teachingResources/tomatoProducts");
 		this.searchService = searchService;
-		this.productDAO = productDAO;
+		this.productRepository = productRepository;
 		map=new HashMap<>();
 
 	}
@@ -281,17 +278,19 @@ public class TescoDetailsApiClientService {
 
 	public Tesco_Product getFullDataFromDbOrApi(String url) {
 
-		//Tesco_Product fromDb=productDAO.list();
+		List<Tesco_Product> found=this.productRepository.findByUrl(url);
 
-
-		Tesco_Product fromApi=getDetailAndSearchDataProductByUrl(url);
-
-
-		return fromApi;
-
+		if(!found.isEmpty()&&found.get(0)!=null){
+			Tesco_Product foundInDb= found.get(0);
+			return foundInDb;
+		}else{
+			Tesco_Product fromApi=getDetailAndSearchDataProductByUrl( url);
+			this.productRepository.save(fromApi);
+			return fromApi;
+		}
 
 	}
-
+//	Tesco Finest Sugardrop Tomatoes 220G
 
 	public Tesco_Product getDetailAndSearchDataProductByUrl(String url) {
 		Tesco_Product productDetails=this.getProduktByUrl(url);
