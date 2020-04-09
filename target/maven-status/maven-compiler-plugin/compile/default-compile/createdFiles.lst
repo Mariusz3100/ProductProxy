@@ -6,7 +6,7 @@ mariusz/ambroziak/kassistant/enums/MergeType.class
 mariusz/ambroziak/kassistant/webclients/tesco/TescoApiClientService.class
 mariusz/ambroziak/kassistant/webclients/wordsapi/WordsApiClient.class
 mariusz/ambroziak/kassistant/webclients/spacy/tokenization/DependencyTreeNode.class
-mariusz/ambroziak/kassistant/hibernate/model/Customer.class
+mariusz/ambroziak/kassistant/hibernate/dao/ProductDAOImpl.class
 mariusz/ambroziak/kassistant/webclients/edamamnlp/EdamamNlpIngredientOuter.class
 mariusz/ambroziak/kassistant/webclients/spacy/tokenization/ConnectionEntry.class
 mariusz/ambroziak/kassistant/webclients/rapidapi/RapidApiClient.class
@@ -37,6 +37,7 @@ mariusz/ambroziak/kassistant/webclients/edamamnlp/LearningTuple.class
 mariusz/ambroziak/kassistant/webclients/spacy/ner/NerResults.class
 mariusz/ambroziak/kassistant/pojos/quantity/PreciseQuantity.class
 mariusz/ambroziak/kassistant/webclients/wordsapi/WordsApiResult.class
+mariusz/ambroziak/kassistant/hibernate/dao/ProductDAO.class
 mariusz/ambroziak/kassistant/webclients/wikipedia/WikipediaApiClient.class
 mariusz/ambroziak/kassistant/webclients/wordsapi/WordNotFoundException.class
 mariusz/ambroziak/kassistant/pojos/QualifiedToken.class

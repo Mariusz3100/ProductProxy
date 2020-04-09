@@ -6,6 +6,7 @@
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/tesco/TescoDetailsApiClientService.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/pojos/QualifiedToken.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/constants/NlpConstants.java
+/home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/hibernate/dao/ProductDAO.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/wordsapi/WordsApiResult.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/edamamnlp/EdamanApiQuantityExtractor.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/spacy/ner/NerResults.java
@@ -19,6 +20,7 @@
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/pojos/quantity/PreciseQuantity.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/pojos/quantity/QuantityTranslation.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/enums/MergeType.java
+/home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/hibernate/dao/ProductDAOImpl.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/edamamnlp/EdamamNlpIngredientOuter.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/wordsapi/WordsApiResultImpostor.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/utils/ProblemLogger.java
@@ -29,7 +31,6 @@
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/hibernate/repository/ProductRepository.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/tesco/Tesco_Product.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/spacy/tokenization/Token.java
-/home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/hibernate/model/Customer.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/wordsapi/WordNotFoundException.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/DataSourcesApplication.java
 /home/spike/development/mgr/workspaces/ideaWorkspaces/CompoundProjectWorkspace/AiMavenProject/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/spacy/ner/NamedEntityRecognitionClientService.java
