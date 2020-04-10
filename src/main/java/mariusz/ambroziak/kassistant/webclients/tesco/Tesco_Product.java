@@ -74,8 +74,14 @@ public class Tesco_Product extends ProductData{
 	public Tesco_Product() {
 		super();
 	}
-	
 
+	public String getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(String ingredients) {
+		this.ingredients = ingredients;
+	}
 
 	@Override
 	public String getInShopId() {
