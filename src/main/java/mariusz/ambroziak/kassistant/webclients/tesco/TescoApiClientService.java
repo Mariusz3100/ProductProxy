@@ -194,7 +194,7 @@ public class TescoApiClientService {
 
 		Tesco_Product result=new Tesco_Product(name,detailsUrl,description,
 				department,quantityString,
-				superDepartment,Long.toString(tpnb),ingredients);
+				superDepartment,Long.toString(tpnb),ingredients,"");
 		return result;
 	}
 

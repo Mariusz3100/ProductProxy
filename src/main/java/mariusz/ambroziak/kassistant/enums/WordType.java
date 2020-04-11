@@ -5,6 +5,7 @@ public enum WordType {
 	ProductElement,
 	PunctuationElement,
 	Unknown,
+	Ignored,
 //	Merged,
 	ProductPropertyElement;
 	

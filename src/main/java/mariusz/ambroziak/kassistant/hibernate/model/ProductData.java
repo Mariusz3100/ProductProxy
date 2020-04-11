@@ -19,10 +19,13 @@ public abstract class ProductData {
     protected String description;
     protected String department;
 
+    protected String brand;
+
     @Transient
     protected PreciseQuantity quantity;
     @Transient
     protected PreciseQuantity totalQuantity;
+
 
 
     public PreciseQuantity getQuantity() {
@@ -55,6 +58,14 @@ public abstract class ProductData {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getName() {

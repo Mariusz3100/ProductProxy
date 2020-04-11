@@ -61,12 +61,13 @@ public class Tesco_Product extends ProductData{
 
 	public Tesco_Product(String name, String detailsUrl, String description, String department,
 						 String quantity_string, String superdepartment,
-						 String tbnp, String ingredients) {
+						 String tbnp, String ingredients,String brand) {
 		super(name, detailsUrl, description, department);
 		this.quantity_string = quantity_string;
 		this.superdepartment = superdepartment;
 		this.tbnp = tbnp;
 		this.ingredients = ingredients;
+		this.brand=brand;
 	}
 
 
