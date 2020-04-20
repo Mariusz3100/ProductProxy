@@ -2,6 +2,7 @@ mariusz/ambroziak/kassistant/webclients/edamamnlp/EdamanApiQuantityExtractor.cla
 mariusz/ambroziak/kassistant/webclients/spacy/ner/NamedEntityRecognitionClientService.class
 mariusz/ambroziak/kassistant/webclients/spacy/tokenization/TokenizationClientService.class
 mariusz/ambroziak/kassistant/webclients/edamamnlp/EdamamNlpSingleIngredientInner.class
+mariusz/ambroziak/kassistant/webclients/spacy/tokenization/WordParsed.class
 mariusz/ambroziak/kassistant/enums/MergeType.class
 mariusz/ambroziak/kassistant/webclients/tesco/TescoApiClientService.class
 mariusz/ambroziak/kassistant/webclients/wordsapi/WordsApiClient.class

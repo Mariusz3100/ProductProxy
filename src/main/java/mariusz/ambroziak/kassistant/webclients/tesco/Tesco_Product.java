@@ -16,6 +16,7 @@ public class Tesco_Product extends ProductData{
 	private String superdepartment;
 	private String tbnp;
 	private String ingredients;
+	private String searchApiName;
 
 
 
@@ -101,6 +102,13 @@ public class Tesco_Product extends ProductData{
 		this.tbnp = tbnp;
 	}
 
+	public String getSearchApiName() {
+		return searchApiName;
+	}
+
+	public void setSearchApiName(String searchApiName) {
+		this.searchApiName = searchApiName;
+	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -12,6 +12,7 @@
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/spacy/tokenization/TokenizationResults.java
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/constants/NlpConstants.java
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/hibernate/dao/ProductDAOImpl.java
+/home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/spacy/tokenization/WordParsed.java
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/wordsapi/ConvertApiClient.java
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/enums/AmountTypes.java
 /home/spike/development/mgr/workspaces/newIdeaWorkspaces/AiCompound/DataSourcesModule/src/main/java/mariusz/ambroziak/kassistant/webclients/tesco/TescoQuantityExtractor.java
