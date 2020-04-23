@@ -21,7 +21,7 @@ import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
 @Component
 public class WordsApiClient extends RapidApiClient {
 
-	private static final String baseUrl= "https://wordsapiv1.p.mashape.com/words/";
+	private static final String baseUrl= "https://wordsapiv1.p.rapidapi.com/words/";
 	private static final String typeOfSuffix="/typeOf";
 	
 	private static final String header1Value="wordsapiv1.p.rapidapi.com";
