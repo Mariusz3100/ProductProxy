@@ -3,6 +3,8 @@ package mariusz.ambroziak.kassistant.hibernate.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,20 @@ public class ProductDAOImpl implements ProductDAO {
     private Session getSession() {
         return entityManager.unwrap(Session.class);
     }
-	
+
 	
 
 	@Override
 	public List<ProductData> list() {
-		@SuppressWarnings("unchecked")
-		List<ProductData> listProdukt = (List<ProductData>) getSession()
-				.createCriteria(ProductData.class)
-				.list();
 
-		return listProdukt;
+		CriteriaBuilder builder = getSession().getCriteriaBuilder();
+		CriteriaQuery<ProductData> query = builder.createQuery(ProductData.class);
+
+		List<ProductData> results=getSession().createQuery(query).getResultList();
+
+		return results;
 	}
-//
-//	@Override
-//	public List<ProductData> getProduktsById(String id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
+
 	@Override
 	public void saveProduct(ProductData produkt) {
 		if(produkt!=null){
@@ -50,7 +47,7 @@ public class ProductDAOImpl implements ProductDAO {
 			
 			this.getSession().save(produkt);
 		}else{
-			System.err.println("Problem przy zapisywaniu danych produktu");
+			System.err.println("Problem przy zapisywaniu danych produktu: Próba zapisania pustego produktu");
 		}
 		
 	}
