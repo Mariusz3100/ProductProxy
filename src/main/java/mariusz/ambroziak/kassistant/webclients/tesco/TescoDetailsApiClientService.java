@@ -39,16 +39,12 @@ public class TescoDetailsApiClientService {
     private static final String headerValue = "bb40509242724f799153796d8718c3f3";
 
 
-    private ResourceLoader resourceLoader;
-    private Resource inputFileResource;
     private TescoApiClientService searchService;
     private TescoProductRepository productRepository;
     public Map<String, String> map;
 
     @Autowired
-    public TescoDetailsApiClientService(ResourceLoader resourceLoader, TescoApiClientService searchService, TescoProductRepository productRepository) {
-        this.resourceLoader = resourceLoader;
-        this.inputFileResource = this.resourceLoader.getResource("classpath:/teachingResources/tomatoProducts");
+    public TescoDetailsApiClientService(TescoApiClientService searchService, TescoProductRepository productRepository) {
         this.searchService = searchService;
         this.productRepository = productRepository;
         map = new HashMap<>();

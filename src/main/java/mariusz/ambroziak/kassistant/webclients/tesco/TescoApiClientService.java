@@ -42,7 +42,6 @@ public class TescoApiClientService {
 
 	@Autowired
 	private ResourceLoader resourceLoader;
-	private Resource inputFileResource;
 
 	public Map<String,String> map;
 
@@ -52,7 +51,6 @@ public class TescoApiClientService {
 	public TescoApiClientService(ResourceLoader resourceLoader) {
 		super();
 		this.resourceLoader = resourceLoader;
-		this.inputFileResource = this.resourceLoader.getResource("classpath:/teachingResources/tomatoProducts");;
 		map=new HashMap<>();
 
 	}
