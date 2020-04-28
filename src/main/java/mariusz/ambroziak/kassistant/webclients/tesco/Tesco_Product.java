@@ -71,7 +71,12 @@ public class Tesco_Product extends ProductData{
 		this.brand=brand;
 	}
 
+	@Override
+	public Tesco_Product clone() {
+		Tesco_Product clone=new Tesco_Product(name,super.getUrl(),super.description,this.getDepartment(),quantity_string,superdepartment,tbnp,ingredients,brand);
 
+		return clone;
+	}
 
 	public Tesco_Product() {
 		super();
