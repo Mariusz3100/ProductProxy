@@ -1,6 +1,6 @@
 package mariusz.ambroziak.kassistant.webclients.spacy.tokenization;
 
-public class WordParsed {
+public class WordComparisonResult {
 
     private String word;
     private boolean match;
@@ -21,7 +21,7 @@ public class WordParsed {
         this.match = match;
     }
 
-    public WordParsed(String word, boolean match) {
+    public WordComparisonResult(String word, boolean match) {
         this.word = word;
         this.match = match;
     }
