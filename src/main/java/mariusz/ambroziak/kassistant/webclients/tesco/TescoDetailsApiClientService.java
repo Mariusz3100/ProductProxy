@@ -365,6 +365,10 @@ public class TescoDetailsApiClientService {
             productDetails.setIngredients(tp.getIngredients());
         }
 
+        if (productDetails.getSearchApiName() == null || productDetails.getSearchApiName().isEmpty()) {
+            productDetails.setSearchApiName(tp.getName());
+        }
+
     }
 
     public String returnOrRetrieveProductResponseFor(String url) {
