@@ -1,4 +1,4 @@
-package mariusz.ambroziak.kassistant.webclients.edamamnlp;
+package mariusz.ambroziak.kassistant.webclients.edamam.nlp;
 
 public class EdamamNlpSingleIngredientInner {
 	private float quantity;

@@ -10,6 +10,7 @@ import java.util.List;
 public interface ProductRepository<T extends ProductData>  extends CrudRepository<T,Long> {
 
     List<T> findByUrl(String details_url);
+    List<T> findAll();
 
     T findById(long id);
 

@@ -1,4 +1,4 @@
-package mariusz.ambroziak.kassistant.webclients.edamamnlp;
+package mariusz.ambroziak.kassistant.webclients.edamam.nlp;
 
 import java.util.ArrayList;
 import java.util.List;

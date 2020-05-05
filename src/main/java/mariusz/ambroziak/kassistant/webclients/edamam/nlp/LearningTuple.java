@@ -1,4 +1,4 @@
-package mariusz.ambroziak.kassistant.webclients.edamamnlp;
+package mariusz.ambroziak.kassistant.webclients.edamam.nlp;
 
 
 import mariusz.ambroziak.kassistant.enums.AmountTypes;
