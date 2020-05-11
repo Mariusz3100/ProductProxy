@@ -40,10 +40,10 @@ public class EdamanIngredientParsingService {
 	
 
 	private final String baseUrl="https://api.edamam.com/api/nutrition-details?app_id=1d006ca9&app_key=d089c348b9338fc421bdc6695ff34e8c";
-	private final String csvSeparator=";";
+	public static final String csvSeparator=";";
 	
 	
-	
+
 	@Autowired
 	public EdamanIngredientParsingService(RestTemplateBuilder restTemplateBuilder, ResourceLoader resourceLoader) {
 		this.restTemplate = restTemplateBuilder.build();
@@ -51,7 +51,7 @@ public class EdamanIngredientParsingService {
 		this.resourceLoader = resourceLoader;
 		
 		this.inputFileResource=this.resourceLoader.getResource("classpath:/teachingResources/wordsInput");
-		this.expectedOutputFileResource=this.resourceLoader.getResource("classpath:/teachingResources/wordsTestset1");
+		this.expectedOutputFileResource=this.resourceLoader.getResource("classpath:/teachingResources/tomatoIngredients");
 		
 
 	}

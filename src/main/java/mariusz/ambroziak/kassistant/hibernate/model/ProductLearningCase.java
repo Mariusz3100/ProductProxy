@@ -11,13 +11,19 @@ public class ProductLearningCase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long plc_id;
+    @Column(length = 500)
     private String name;
+
+    @Column(length = 500)
     private String url;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 100)
     private ProductType type_expected;
 
+    @Column(length = 2000)
     private String minimal_words_expected;
+    @Column(length = 2000)
     private String extended_words_expected;
 
 
