@@ -13,12 +13,15 @@ public abstract class ProductData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long pd_id;
+    @Column(length = 500)
     protected String url;
-
+    @Column(length = 500)
     protected String name;
+    @Column(length = 2000)
     protected String description;
+    @Column(length = 500)
     protected String department;
-
+    @Column(length = 500)
     protected String brand;
 
     @Transient
