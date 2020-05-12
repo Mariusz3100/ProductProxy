@@ -29,6 +29,13 @@ public class IngredientPhraseParsingResult {
     @Column(length = 500)
     private String extendedResultsCalculated;
 
+    @Enumerated(EnumType.STRING)
+    private ProductType typeCalculated;
+
+    public IngredientPhraseParsingResult() {
+
+    }
+
 
     public Long getIpprs_id() {
         return ipprs_id;
@@ -86,12 +93,24 @@ public class IngredientPhraseParsingResult {
         this.extendedResultsCalculated = extendedResultsCalculated;
     }
 
-    public IngredientPhraseParsingResult(String originalName, double edamamAmount, AmountTypes edamamAmountType, ProductType edamamProductType, String minimalResultsCalculated, String extendedResultsCalculated) {
+
+    public ProductType getTypeCalculated() {
+        return typeCalculated;
+    }
+
+    public void setTypeCalculated(ProductType typeCalculated) {
+        this.typeCalculated = typeCalculated;
+    }
+
+    public IngredientPhraseParsingResult(String originalName, double edamamAmount, AmountTypes edamamAmountType, ProductType edamamProductType, String minimalResultsCalculated, String extendedResultsCalculated, ProductType typeCalculated) {
         this.originalName = originalName;
         this.edamamAmount = edamamAmount;
         this.edamamAmountType = edamamAmountType;
         this.edamamProductType = edamamProductType;
         this.minimalResultsCalculated = minimalResultsCalculated;
         this.extendedResultsCalculated = extendedResultsCalculated;
+        this.typeCalculated = typeCalculated;
     }
+
+
 }

@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.model;
 
+import mariusz.ambroziak.kassistant.enums.ProductType;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,12 @@ public class ProductParsingResult {
     @Column(length = 500)
     private String extendedResultsCalculated;
 
+    @Enumerated(EnumType.STRING)
+    private ProductType typeCalculated;
+
+    public ProductParsingResult() {
+
+    }
 
     public Long getPpr_id() {
         return ppr_id;
@@ -61,7 +69,15 @@ public class ProductParsingResult {
         this.extendedResultsCalculated = extendedResultsCalculated;
     }
 
-    public ProductParsingResult(ProductData product, String originalName, String minimalResultsCalculated, String extendedResultsCalculated) {
+    public ProductType getTypeCalculated() {
+        return typeCalculated;
+    }
+
+    public void setTypeCalculated(ProductType typeCalculated) {
+        this.typeCalculated = typeCalculated;
+    }
+
+    public ProductParsingResult(ProductData product, String originalName, String minimalResultsCalculated, String extendedResultsCalculated, ProductType typeCalculated) {
         this.product = product;
         this.originalName = originalName;
         this.minimalResultsCalculated = minimalResultsCalculated;
