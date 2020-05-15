@@ -1,14 +1,27 @@
-package mariusz.ambroziak.kassistant.webclients.edamam.nlp;
+package mariusz.ambroziak.kassistant.hibernate.model;
 
 
 import mariusz.ambroziak.kassistant.enums.AmountTypes;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
+import mariusz.ambroziak.kassistant.webclients.edamam.nlp.EdamanApiQuantityExtractor;
 
-public class LearningTuple extends EdamamNlpSingleIngredientInner{
+import javax.persistence.*;
+@Entity
+public class IngredientLearningCase {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long ilc_id;
+
+
 	private String originalPhrase;
+	private String foodMatch;
 	private float amount;
+
+	@Enumerated(EnumType.STRING)
 	private AmountTypes amountType;
+
+	@Enumerated(EnumType.STRING)
 	private ProductType foodTypeCategory;
 
 	public ProductType getFoodTypeCategory() {
@@ -43,16 +56,20 @@ public class LearningTuple extends EdamamNlpSingleIngredientInner{
 //		this.amountType = resultingQuantity.getType();
 //	}
 
-	public LearningTuple(String originalPhrase,float quantity, String measure, String foodMatch,ProductType productType) {
-		super(quantity, measure, foodMatch);
+	public IngredientLearningCase(String originalPhrase, float quantity, String measure, String foodMatch, ProductType productType) {
 		PreciseQuantity resultingQuantity = EdamanApiQuantityExtractor.getResultingQuantity(quantity, measure);
 
 		this.originalPhrase = originalPhrase;
 		this.amount = resultingQuantity.getAmount();
 		this.amountType = resultingQuantity.getType();
 		this.foodTypeCategory=productType;
+		this.foodMatch=foodMatch;
 
 	}
+
+
+
+
 
 	public String getOriginalPhrase() {
 		return originalPhrase;
@@ -62,9 +79,20 @@ public class LearningTuple extends EdamamNlpSingleIngredientInner{
 		this.originalPhrase = originalPhrase;
 	}
 
-	
-	
-	
-	
-	
+
+	public String getFoodMatch() {
+		return foodMatch;
+	}
+
+	public void setFoodMatch(String foodMatch) {
+		this.foodMatch = foodMatch;
+	}
+
+	public Long getIlc_id() {
+		return ilc_id;
+	}
+
+	public void setIlc_id(Long ilc_id) {
+		this.ilc_id = ilc_id;
+	}
 }

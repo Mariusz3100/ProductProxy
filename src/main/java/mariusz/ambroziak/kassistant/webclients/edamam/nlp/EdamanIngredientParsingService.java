@@ -9,6 +9,7 @@ import java.util.List;
 
 
 import mariusz.ambroziak.kassistant.enums.ProductType;
+import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,13 +57,13 @@ public class EdamanIngredientParsingService {
 
 	}
 
-	public List<LearningTuple> retrieveDataFromFile() throws IOException {
+	public List<IngredientLearningCase> retrieveDataFromFile() throws IOException {
 		InputStream inputStream = expectedOutputFileResource.getInputStream();
 		BufferedReader br=new BufferedReader(new InputStreamReader(inputStream));
 
 
 		String line=br.readLine();
-		List<LearningTuple> listOfExpectedResults=new ArrayList<LearningTuple>();
+		List<IngredientLearningCase> listOfExpectedResults=new ArrayList<IngredientLearningCase>();
 		
 		while(line!=null) {
 			if(!line.startsWith("#")) {
@@ -76,7 +77,7 @@ public class EdamanIngredientParsingService {
 
 				float multiplier = Float.parseFloat(multiplierString);
 				PreciseQuantity pq = EdamanApiQuantityExtractor.getResultingQuantity(multiplier, containerPhraseString);
-				LearningTuple er = new LearningTuple(phrase, pq.getAmount(), containerPhraseString, foodFound, pt);
+				IngredientLearningCase er = new IngredientLearningCase(phrase, pq.getAmount(), containerPhraseString, foodFound, pt);
 
 				listOfExpectedResults.add(er);
 			}
@@ -120,24 +121,24 @@ public class EdamanIngredientParsingService {
 	}
 	
 	
-	public void retrieveAndSaveEdamanParsingDataFromFile() throws IOException {
-		List<String> lines = readAllIngredientLines();
-		
-		EdamamNlpResponseData found = this.findInApi(lines);
-		StringBuilder sb=new StringBuilder();
-		for(EdamamNlpIngredientOuter outer:found.getIngredients()) {
-			String original=outer.getText();
-			for(EdamamNlpSingleIngredientInner inner:outer.getParsed()) {
-				String line=original+csvSeparator+inner.getFoodMatch()+csvSeparator
-						+inner.getQuantity()+csvSeparator+inner.getMeasure();
-				System.out.println(line);
-			}
-		}
-		
-		
-		
-		
-	}
+//	public void retrieveAndSaveEdamanParsingDataFromFile() throws IOException {
+//		List<String> lines = readAllIngredientLines();
+//
+//		EdamamNlpResponseData found = this.findInApi(lines);
+//		StringBuilder sb=new StringBuilder();
+//		for(EdamamNlpIngredientOuter outer:found.getIngredients()) {
+//			String original=outer.getText();
+//			for(EdamamNlpSingleIngredientInner inner:outer.getParsed()) {
+//				String line=original+csvSeparator+inner.getFoodMatch()+csvSeparator
+//						+inner.getQuantity()+csvSeparator+inner.getMeasure();
+//				System.out.println(line);
+//			}
+//		}
+//
+//
+//
+//
+//	}
 	
 	
 	public void retrieveEdamanParsingDataFromFileSequentially() throws IOException {
