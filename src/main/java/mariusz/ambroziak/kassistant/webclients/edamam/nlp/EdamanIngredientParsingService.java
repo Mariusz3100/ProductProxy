@@ -10,6 +10,8 @@ import java.util.List;
 
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.model.ProductLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.repository.IngredientPhraseLearningCaseRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +38,8 @@ public class EdamanIngredientParsingService {
 	private Resource inputFileResource;
 	//private Resource outputFileResource;
 	private Resource expectedOutputFileResource;
-
+	@Autowired
+	private IngredientPhraseLearningCaseRepository ingredientPhraseLearningCaseRepository;
 	
 	
 
@@ -161,6 +164,9 @@ public class EdamanIngredientParsingService {
 						String lineOut=original+csvSeparator+inner.getFoodMatch()+csvSeparator
 								+inner.getQuantity()+csvSeparator+inner.getMeasure();
 						System.out.println(lineOut);
+//						ProductType.parseType(type)
+						IngredientLearningCase ilc=new IngredientLearningCase(original,inner.getQuantity(),inner.getMeasure(),inner.getFoodMatch(),ProductType.unknown);
+						this.ingredientPhraseLearningCaseRepository.save(ilc);
 					}
 				}
 			}catch(UnknownHttpStatusCodeException e) {
@@ -168,8 +174,20 @@ public class EdamanIngredientParsingService {
 			}
 			line=br.readLine();
 		}
-		
-		
+
+//		String name= elements[0];
+//
+//		String type = elements[2];
+//		ProductType foundType = ProductType.parseType(type);
+//		String url=elements[1];
+//		String minimalExpected = elements[3].toLowerCase();
+//		String extendedExpected = elements[4].toLowerCase();
+//		ProductLearningCase learningCase=new ProductLearningCase();
+//		learningCase.setExtended_words_expected(extendedExpected);
+//		learningCase.setMinimal_words_expected(minimalExpected);
+//		learningCase.setName(name);
+//		learningCase.setType_expected(foundType);
+//		learningCase.setUrl(url);
 		
 		
 		

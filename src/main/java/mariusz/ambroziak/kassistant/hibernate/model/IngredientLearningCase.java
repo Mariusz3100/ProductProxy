@@ -68,8 +68,8 @@ public class IngredientLearningCase {
 	}
 
 
-
-
+	public IngredientLearningCase() {
+	}
 
 	public String getOriginalPhrase() {
 		return originalPhrase;
