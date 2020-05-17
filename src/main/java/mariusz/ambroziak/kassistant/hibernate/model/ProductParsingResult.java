@@ -17,6 +17,8 @@ public class ProductParsingResult {
     @Column(length = 500)
     private String originalName;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private ParsingBatch parsingBatch;
     @Column(length = 500)
     private String minimalResultsCalculated;
     @Column(length = 500)
@@ -75,6 +77,14 @@ public class ProductParsingResult {
 
     public void setTypeCalculated(ProductType typeCalculated) {
         this.typeCalculated = typeCalculated;
+    }
+
+    public ParsingBatch getParsingBatch() {
+        return parsingBatch;
+    }
+
+    public void setParsingBatch(ParsingBatch parsingBatch) {
+        this.parsingBatch = parsingBatch;
     }
 
     public ProductParsingResult(ProductData product, String originalName, String minimalResultsCalculated, String extendedResultsCalculated, ProductType typeCalculated) {

@@ -15,6 +15,8 @@ public class IngredientPhraseParsingResult {
 
     private String originalName;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private ParsingBatch parsingBatch;
 
     private double edamamAmount;
 
@@ -100,6 +102,14 @@ public class IngredientPhraseParsingResult {
 
     public void setTypeCalculated(ProductType typeCalculated) {
         this.typeCalculated = typeCalculated;
+    }
+
+    public ParsingBatch getParsingBatch() {
+        return parsingBatch;
+    }
+
+    public void setParsingBatch(ParsingBatch parsingBatch) {
+        this.parsingBatch = parsingBatch;
     }
 
     public IngredientPhraseParsingResult(String originalName, double edamamAmount, AmountTypes edamamAmountType, ProductType edamamProductType, String minimalResultsCalculated, String extendedResultsCalculated, ProductType typeCalculated) {
