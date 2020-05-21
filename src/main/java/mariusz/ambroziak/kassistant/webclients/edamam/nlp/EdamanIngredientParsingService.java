@@ -165,7 +165,11 @@ public class EdamanIngredientParsingService {
 								+inner.getQuantity()+csvSeparator+inner.getMeasure();
 						System.out.println(lineOut);
 //						ProductType.parseType(type)
-						IngredientLearningCase ilc=new IngredientLearningCase(original,inner.getQuantity(),inner.getMeasure(),inner.getFoodMatch(),ProductType.unknown);
+
+						original=correctErrors(original);
+						String foodMatch = inner.getFoodMatch();
+						foodMatch=correctErrors(foodMatch);
+						IngredientLearningCase ilc=new IngredientLearningCase(original,inner.getQuantity(),inner.getMeasure(), foodMatch,ProductType.unknown);
 						this.ingredientPhraseLearningCaseRepository.save(ilc);
 					}
 				}
@@ -192,6 +196,13 @@ public class EdamanIngredientParsingService {
 		
 		
 		
+	}
+
+	private String correctErrors(String phrase) {
+		phrase=phrase.replaceFirst("½", "1/2");
+		phrase=phrase.replaceFirst("¼", "1/4");
+		phrase=phrase.replaceAll("é", "e");
+		return phrase;
 	}
 
 	private List<String> readAllIngredientLines() throws IOException {
