@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.webclients.spacy.tokenization;
 
+import java.util.Objects;
+
 public class ConnectionEntry {
 
 	Token head;
@@ -27,7 +29,25 @@ public class ConnectionEntry {
 	public String toString() {
 		return child.getText() + "("+ head.getText()+")";
 	}
-	
-	
-	
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof ConnectionEntry)) return false;
+		ConnectionEntry that = (ConnectionEntry) o;
+		return Objects.equals(getHead(), that.getHead()) &&
+				Objects.equals(getChild(), that.getChild());
+	}
+
+	public boolean permissiveEquals(ConnectionEntry e) {
+		if (this == e) return true;
+		return (Objects.equals(getHead(), e.getHead()) ||Objects.equals(getHead(), e.getChild()))&&
+				(Objects.equals(getChild(), e.getChild()) ||Objects.equals(getChild(), e.getHead()));
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getHead(), getChild());
+	}
 }
