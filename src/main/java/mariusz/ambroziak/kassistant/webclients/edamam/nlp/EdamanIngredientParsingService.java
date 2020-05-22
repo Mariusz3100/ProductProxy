@@ -155,26 +155,28 @@ public class EdamanIngredientParsingService {
 		List<String> lines=new ArrayList<String>();
 		
 		while(line!=null) {
-			try {
-				EdamamNlpResponseData found = this.find(line);
-			
-				for(EdamamNlpIngredientOuter outer:found.getIngredients()) {
-					String original=outer.getText();
-					for(EdamamNlpSingleIngredientInner inner:outer.getParsed()) {
-						String lineOut=original+csvSeparator+inner.getFoodMatch()+csvSeparator
-								+inner.getQuantity()+csvSeparator+inner.getMeasure();
-						System.out.println(lineOut);
+			if(!line.startsWith("#")) {
+				try {
+					EdamamNlpResponseData found = this.find(line);
+
+					for (EdamamNlpIngredientOuter outer : found.getIngredients()) {
+						String original = outer.getText();
+						for (EdamamNlpSingleIngredientInner inner : outer.getParsed()) {
+							String lineOut = original + csvSeparator + inner.getFoodMatch() + csvSeparator
+									+ inner.getQuantity() + csvSeparator + inner.getMeasure();
+							System.out.println(lineOut);
 //						ProductType.parseType(type)
 
-						original=correctErrors(original);
-						String foodMatch = inner.getFoodMatch();
-						foodMatch=correctErrors(foodMatch);
-						IngredientLearningCase ilc=new IngredientLearningCase(original,inner.getQuantity(),inner.getMeasure(), foodMatch,ProductType.unknown);
-						this.ingredientPhraseLearningCaseRepository.save(ilc);
+							original = correctErrors(original);
+							String foodMatch = inner.getFoodMatch();
+							foodMatch = correctErrors(foodMatch);
+							IngredientLearningCase ilc = new IngredientLearningCase(original, inner.getQuantity(), inner.getMeasure(), foodMatch, ProductType.unknown);
+							this.ingredientPhraseLearningCaseRepository.save(ilc);
+						}
 					}
+				} catch (UnknownHttpStatusCodeException e) {
+					System.out.println(line + ";" + e.getLocalizedMessage());
 				}
-			}catch(UnknownHttpStatusCodeException e) {
-				System.out.println(line+";"+e.getLocalizedMessage());
 			}
 			line=br.readLine();
 		}
