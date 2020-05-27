@@ -42,8 +42,9 @@ public class ConnectionEntry {
 
 	public boolean permissiveEquals(ConnectionEntry e) {
 		if (this == e) return true;
-		return (Objects.equals(getHead(), e.getHead()) ||Objects.equals(getHead(), e.getChild()))&&
-				(Objects.equals(getChild(), e.getChild()) ||Objects.equals(getChild(), e.getHead()));
+		return (Objects.equals(getHead().getLemma(), e.getHead().getLemma()) ||Objects.equals(getHead().getLemma(), e.getChild().getLemma()))&&
+				(Objects.equals(getChild().getLemma(), e.getChild().getLemma()) ||Objects.equals(getChild().getLemma(), e.getHead().getLemma()))
+				;
 	}
 
 	@Override
