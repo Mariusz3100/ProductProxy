@@ -79,7 +79,9 @@ public class QualifiedToken extends Token {
 				+ getRelationToParentType() + ", pos=" + getPos() + ", head=" + getHead() + ", wordType=" + this.wordType + "]";
 	}
 
-
+	public boolean compareWithToken(Token token) {
+		return this.getText().equals(token.getText())||this.getLemma().equals(token.getLemma());
+	}
 
 	public static QualifiedToken createMerged(String fused,WordType type) {
 		return new QualifiedToken(fused, "fused", "fused", type,"fused","fused","fused");
