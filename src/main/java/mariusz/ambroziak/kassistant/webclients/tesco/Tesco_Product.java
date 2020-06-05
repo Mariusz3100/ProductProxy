@@ -1,5 +1,6 @@
 package mariusz.ambroziak.kassistant.webclients.tesco;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -11,11 +12,15 @@ import java.util.Objects;
 @DiscriminatorValue("tesco")
 public class Tesco_Product extends ProductData{
 
-
+	@Column(length = 200)
 	private String quantity_string;
+	@Column(length = 500)
 	private String superdepartment;
+	@Column(length = 200)
 	private String tbnp;
+	@Column(length = 500)
 	private String ingredients;
+	@Column(length = 500)
 	private String searchApiName;
 
 
