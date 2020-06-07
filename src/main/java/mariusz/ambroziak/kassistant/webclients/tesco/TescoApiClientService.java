@@ -191,10 +191,11 @@ public class TescoApiClientService {
 		String department =singleProductJson.has("department")?singleProductJson.getString("department"):"";
 		String superDepartment =singleProductJson.has("superDepartment")?singleProductJson.getString("superDepartment"):"";
 		String ingredients =singleProductJson.has("ingredients")?singleProductJson.getJSONArray("ingredients").getString(0):"";
+		String imageUrl =singleProductJson.has("image")?singleProductJson.getString("image"):"";
 
 		Tesco_Product result=new Tesco_Product(name,detailsUrl,description,
 				department,quantityString,
-				superDepartment,Long.toString(tpnb),ingredients,"");
+				superDepartment,Long.toString(tpnb),ingredients,"",imageUrl);
 		return result;
 	}
 

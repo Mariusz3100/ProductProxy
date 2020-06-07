@@ -22,8 +22,8 @@ public class Tesco_Product extends ProductData{
 	private String ingredients;
 	@Column(length = 500)
 	private String searchApiName;
-
-
+	@Column(length = 200)
+	private String imageUrl;
 
 
     public String getQuantityString() {
@@ -65,20 +65,11 @@ public class Tesco_Product extends ProductData{
 //	}
 
 
-	public Tesco_Product(String name, String detailsUrl, String description, String department,
-						 String quantity_string, String superdepartment,
-						 String tbnp, String ingredients,String brand) {
-		super(name, detailsUrl, description, department);
-		this.quantity_string = quantity_string;
-		this.superdepartment = superdepartment;
-		this.tbnp = tbnp;
-		this.ingredients = ingredients;
-		this.brand=brand;
-	}
+
 
 	@Override
 	public Tesco_Product clone() {
-		Tesco_Product clone=new Tesco_Product(name,super.getUrl(),super.description,this.getDepartment(),quantity_string,superdepartment,tbnp,ingredients,brand);
+		Tesco_Product clone=new Tesco_Product(name,super.getUrl(),super.description,this.getDepartment(),quantity_string,superdepartment,tbnp,ingredients,brand,imageUrl);
 
 		return clone;
 	}
@@ -120,6 +111,14 @@ public class Tesco_Product extends ProductData{
 		this.searchApiName = searchApiName;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -131,5 +130,17 @@ public class Tesco_Product extends ProductData{
 	@Override
 	public int hashCode() {
 		return Objects.hash(getTbnp());
+	}
+
+	public Tesco_Product(String name, String detailsUrl, String description, String department,
+						 String quantity_string, String superdepartment,
+						 String tbnp, String ingredients,String brand,String imageUrl) {
+		super(name, detailsUrl, description, department);
+		this.quantity_string = quantity_string;
+		this.superdepartment = superdepartment;
+		this.tbnp = tbnp;
+		this.ingredients = ingredients;
+		this.brand=brand;
+		this.imageUrl=imageUrl;
 	}
 }

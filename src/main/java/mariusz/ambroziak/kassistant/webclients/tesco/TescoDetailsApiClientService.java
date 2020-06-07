@@ -182,7 +182,7 @@ public class TescoDetailsApiClientService {
         String ingredients = singleProductJson.has("ingredients") ? singleProductJson.getJSONArray("ingredients").getString(0) : "";
         String brand = singleProductJson.has("brand") ? singleProductJson.getString("brand") : "";
 
-        Tesco_Product result = new Tesco_Product(description, detailsUrl, actualDesc, department, quantityString, superDepartment, Long.toString(tpnb), ingredients,brand);
+        Tesco_Product result = new Tesco_Product(description, detailsUrl, actualDesc, department, quantityString, superDepartment, Long.toString(tpnb), ingredients,brand,"");
 
         setQuantities(singleProductJson, result);
 
@@ -368,6 +368,11 @@ public class TescoDetailsApiClientService {
         if (productDetails.getSearchApiName() == null || productDetails.getSearchApiName().isEmpty()) {
             productDetails.setSearchApiName(tp.getName());
         }
+
+        if (productDetails.getImageUrl() == null || productDetails.getImageUrl().isEmpty()) {
+            productDetails.setImageUrl(tp.getImageUrl());
+        }
+
 
     }
 
