@@ -53,7 +53,10 @@ public class TokenizationResults {
 	}
 
 	public List<ConnectionEntry> getAllTwoWordDependencies() {
-		return this.getDependencyTree().getAllTwoWordDependencies(this.getTokens());
+		if(this.getDependencyTree()==null||this.getDependencyTree().getAllTwoWordDependencies(this.getTokens())==null)
+			return new ArrayList<>();
+		else
+			return this.getDependencyTree().getAllTwoWordDependencies(this.getTokens());
 		
 	}
 	
