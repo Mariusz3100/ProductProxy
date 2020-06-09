@@ -29,6 +29,7 @@ public class PhraseFound {
 
     private ProductParsingResult relatedProductResult;
 
+    private String reasoning;
 
     public Long getPf_id() {
         return pf_id;
@@ -70,11 +71,29 @@ public class PhraseFound {
         this.relatedProductResult = relatedProductResult;
     }
 
+    public String getReasoning() {
+        return reasoning;
+    }
 
-    public PhraseFound(String phrase, WordType type, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
+    public void setReasoning(String reasoning) {
+        this.reasoning = reasoning;
+    }
+
+    public PhraseFound(String phrase, WordType type,String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
         this.phrase = phrase;
         this.type = type;
         this.relatedIngredientResult = relatedIngredientResult;
         this.relatedProductResult = relatedProductResult;
+        this.reasoning = reasoning;
+    }
+
+
+    public PhraseFound(String phrase, WordType type, String reasoning) {
+        this.phrase = phrase;
+        this.type = type;
+        this.reasoning = reasoning;
+    }
+
+    public PhraseFound() {
     }
 }

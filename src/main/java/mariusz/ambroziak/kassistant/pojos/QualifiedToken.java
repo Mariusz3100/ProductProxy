@@ -9,7 +9,7 @@ import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
 public class QualifiedToken extends Token {
 	private WordType wordType;
 	private MergeType mergeType;
-
+	private String reasoning;
 
 	public MergeType getMergeType() {
 		return mergeType;
@@ -20,6 +20,13 @@ public class QualifiedToken extends Token {
 		this.mergeType = mergeType;
 	}
 
+	public String getReasoning() {
+		return reasoning;
+	}
+
+	public void setReasoning(String reasoning) {
+		this.reasoning = reasoning;
+	}
 
 	public QualifiedToken(String text, String lemma, String tag, WordType wordType) {
 		super(text, lemma, tag);

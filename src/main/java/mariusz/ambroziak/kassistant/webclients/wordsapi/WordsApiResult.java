@@ -11,7 +11,7 @@ public class WordsApiResult {
 	private ArrayList<String> synonyms;
 	private ArrayList<String> attribute;
 
-	
+	private String reasoningForFound;
 	
 
 
@@ -29,8 +29,14 @@ public class WordsApiResult {
 	}
 	private String partOfSpeech;
 	private ArrayList<String> childTypes;
-	
-	
+
+	public String getReasoningForFound() {
+		return reasoningForFound;
+	}
+
+	public void setReasoningForFound(String reasoningForFound) {
+		this.reasoningForFound = reasoningForFound;
+	}
 
 	public WordsApiResult(String originalWord, String baseWord, String definition, ArrayList<String> typeOf,
 			ArrayList<String> synonyms, ArrayList<String> attribute, String partOfSpeech,
