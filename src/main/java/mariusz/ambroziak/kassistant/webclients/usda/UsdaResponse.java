@@ -3,6 +3,7 @@ package mariusz.ambroziak.kassistant.webclients.usda;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsdaResponse {
@@ -36,6 +37,15 @@ public class UsdaResponse {
             e.printStackTrace();
             return e.getLocalizedMessage();
         }
+
+    }
+
+    public static UsdaResponse createEmpty(){
+        UsdaResponse ur=new UsdaResponse();
+        ur.setFoods(new ArrayList<>());
+        ur.setCurrentPage(0);
+
+        return  ur;
 
     }
 }

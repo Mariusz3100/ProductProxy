@@ -35,10 +35,15 @@ public class UsdaApiClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         final HttpEntity<String> entity = new HttpEntity<String>(bodyJson.toString(),headers);
+        try {
+            ResponseEntity<UsdaResponse> retValue = this.restTemplate.exchange(baseUrl, HttpMethod.POST, entity, UsdaResponse.class);
 
-        ResponseEntity<UsdaResponse> retValue=this.restTemplate.exchange(baseUrl, HttpMethod.POST,entity, UsdaResponse.class);
+            return retValue.getBody();
+        }catch (Throwable err){
+            err.printStackTrace();
+        }
 
-        return retValue.getBody();
+        return UsdaResponse.createEmpty();
     }
 
 
