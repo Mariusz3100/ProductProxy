@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -56,6 +58,11 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
     }
 
     @Override
+    public List<PhraseFound> findByPhraseContaining(String phrase) {
+        return this.originalRepo.findByPhraseContaining(phrase);
+    }
+
+    @Override
     public List<PhraseFound> findByReasoning(String reasoning) {
         return this.originalRepo.findByReasoning(reasoning);
     }
@@ -63,6 +70,24 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
     @Override
     public List<PhraseFound> findByPhraseAndReasoning(String phrase, String reasoning) {
         return originalRepo.findByPhraseAndReasoning(phrase,reasoning);
+    }
+
+    @Override
+    public List<PhraseFound> findBySingleWordPhrase(String word) {
+
+        if(word==null||word.isEmpty())
+            return new ArrayList<>();
+        word=word.trim();
+        if(word.contains(" "))
+            System.err.println("Two words passed to one word method: "+word);
+
+
+        List<PhraseFound> byPhrase = findByPhrase(word);
+
+        if(byPhrase.size()>1)
+            System.err.println("Two results for word: "+word);
+
+        return byPhrase;
     }
 
 

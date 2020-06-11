@@ -8,6 +8,7 @@ import java.util.List;
 public interface PhraseFoundRepository extends CrudRepository<PhraseFound,Long> {
 
     List<PhraseFound> findByPhrase(String phrase);
+    List<PhraseFound> findByPhraseContaining(String phrase);
     List<PhraseFound> findByReasoning(String reasoning);
     List<PhraseFound> findByPhraseAndReasoning(String phrase,String reasoning);
 
