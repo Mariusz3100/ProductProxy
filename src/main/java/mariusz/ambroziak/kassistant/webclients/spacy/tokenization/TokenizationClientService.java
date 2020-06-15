@@ -25,7 +25,13 @@ public class TokenizationClientService {
 			 return TokenizationResults.createEmpty();
 		}
 		TokenizationResults retValue=this.restTemplate.getForObject("http://127.0.0.1:8000/tokenizer?param={param}", TokenizationResults.class,name);
-		
+
+		for(int i=0;i<retValue.getTokens().size();i++){
+			if(retValue.getTokens().get(i).getText().equals("tomatoes")){
+				retValue.getTokens().get(i).setLemma("tomato");
+			}
+		}
+
 		return retValue;
 	}
 
