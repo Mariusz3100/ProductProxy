@@ -11,7 +11,7 @@ public interface ProductRepository<T extends ProductData>  extends CrudRepositor
 
     List<T> findByUrl(String details_url);
     List<T> findAll();
-
+    List<T> findByName(String name);
     T findById(long id);
 
 }
