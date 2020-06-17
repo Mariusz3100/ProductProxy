@@ -6,6 +6,8 @@ import java.util.Optional;
 public enum ProductType{
 	fresh("fresh"),
 	processed("processed"),
+	puree("puree"),
+	juice("juice"),
 	unknown("unknown");
 
 	private String name;
