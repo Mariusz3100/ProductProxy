@@ -115,7 +115,7 @@ public class WordsApiClient extends RapidApiClient {
 		}
 		
 		
-		System.out.println(phrase+"->"+retValue);
+	//	System.out.println(phrase+"->"+retValue);
 		return retValue;
 
 	}

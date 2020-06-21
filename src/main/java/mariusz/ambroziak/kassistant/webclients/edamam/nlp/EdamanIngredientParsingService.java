@@ -164,7 +164,7 @@ public class EdamanIngredientParsingService {
 						for (EdamamNlpSingleIngredientInner inner : outer.getParsed()) {
 							String lineOut = original + csvSeparator + inner.getFoodMatch() + csvSeparator
 									+ inner.getQuantity() + csvSeparator + inner.getMeasure();
-							System.out.println(lineOut);
+	//						System.out.println(lineOut);
 //						ProductType.parseType(type)
 
 							original = correctErrors(original);

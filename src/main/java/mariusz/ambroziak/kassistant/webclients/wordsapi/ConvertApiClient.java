@@ -72,7 +72,7 @@ public class ConvertApiClient extends RapidApiClient {
 		
 		String response=getResponse(phrase, AmountTypes.mg);
 
-		System.out.println(response);
+	//	System.out.println(response);
 		if(response!=null&&!response.isEmpty()) {
 			JSONObject json=new JSONObject(response);
 			String double1 = json.getString("result");
@@ -84,7 +84,7 @@ public class ConvertApiClient extends RapidApiClient {
 
 		response=getResponse(phrase, AmountTypes.ml);
 
-		System.out.println(response);
+	//	System.out.println(response);
 		if(response!=null&&!response.isEmpty()) {
 			JSONObject json=new JSONObject(response);
 			String double1 = json.getString("result");
