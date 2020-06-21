@@ -11,6 +11,6 @@ public interface IngredientPhraseLearningCaseRepository extends CrudRepository<I
 
     Iterable<IngredientLearningCase> findAll();
 
-    ProductLearningCase findById(long id);
+    IngredientLearningCase findById(long id);
 
 }
