@@ -3,6 +3,7 @@ package mariusz.ambroziak.kassistant.hibernate.model;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Product_Parsing_Result")
@@ -92,5 +93,22 @@ public class ProductParsingResult {
         this.originalName = originalName;
         this.minimalResultsCalculated = minimalResultsCalculated;
         this.extendedResultsCalculated = extendedResultsCalculated;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ProductParsingResult)) return false;
+        ProductParsingResult that = (ProductParsingResult) o;
+        return Objects.equals(getProduct(), that.getProduct()) &&
+                Objects.equals(getOriginalName(), that.getOriginalName()) &&
+                Objects.equals(getMinimalResultsCalculated(), that.getMinimalResultsCalculated()) &&
+                Objects.equals(getExtendedResultsCalculated(), that.getExtendedResultsCalculated()) &&
+                getTypeCalculated() == that.getTypeCalculated();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getProduct(), getOriginalName(), getMinimalResultsCalculated(), getExtendedResultsCalculated(), getTypeCalculated());
     }
 }
