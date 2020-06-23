@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProductParsingResultRepository  extends CrudRepository<ProductParsingResult,Long> {
 
-
+    ProductParsingResult findByOriginalName(String originalName);
 }
