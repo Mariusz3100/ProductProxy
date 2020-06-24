@@ -18,7 +18,8 @@ public class Morrisons_Product extends ProductData{
 	private String sku;
 	@Column(length = 1000)
 	private String ingredients;
-
+	@Column(length = 203)
+	private String packageType;
 
 	public String getDepartmentList() {
 		return departmentList;
@@ -54,6 +55,15 @@ public class Morrisons_Product extends ProductData{
 		setSku(id);
 	}
 
+
+	public String getPackageType() {
+		return packageType;
+	}
+
+	public void setPackageType(String packageType) {
+		this.packageType = packageType;
+	}
+
 	public Morrisons_Product(String name, String detailsUrl, String description, String department, String departmentList, String sku, String ingredients) {
 		super(name, detailsUrl, description, department);
 		this.departmentList = departmentList;
@@ -63,5 +73,12 @@ public class Morrisons_Product extends ProductData{
 
 	public Morrisons_Product() {
 
+	}
+
+	@Override
+	public ProductData clone() {
+		return new Morrisons_Product(""+this.getName(),""+this.getUrl(),
+				""+this.getDescription(),""+this.getDepartment(),
+				""+this.getDepartmentList(),""+this.getSku(),""+this.getIngredients());
 	}
 }

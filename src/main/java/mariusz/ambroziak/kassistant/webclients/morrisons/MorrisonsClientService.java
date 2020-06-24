@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import mariusz.ambroziak.kassistant.constants.MetadataConstants;
 import mariusz.ambroziak.kassistant.hibernate.repository.MorrisonProductRepository;
 import mariusz.ambroziak.kassistant.hibernate.repository.MorrisonsResponseRepository;
 import mariusz.ambroziak.kassistant.utils.ProblemLogger;
@@ -196,15 +197,26 @@ public class MorrisonsClientService {
         }
         String description="";
         if(bopFields.has("description")) {
-            description=bopFields.getJSONArray("description").getJSONObject(0).getString("content");
+            JSONArray description1 = bopFields.getJSONArray("description");
+            for(int i=0;i<description1.length();i++){
+                if("".equals(description1.getJSONObject(i).getString("title")))
+                description+=description1.getJSONObject(i).getString("content")+"\n";
+            }
+        }
+        String packageType="";
+        if(bopFields.has("storageAndUsage")) {
+            JSONArray json = bopFields.getJSONArray("storageAndUsage");
+            for(int i=0;i<json.length();i++){
+                if("Package Type".equals(json.getJSONObject(i).getString("title")))
+                    packageType+=json.getJSONObject(i).getString("content")+ MetadataConstants.stringListSeparator;
+            }
         }
 
-
         Morrisons_Product retValue=new Morrisons_Product(name,url,description,lastCategory,categoryList,sku,ingredients);
-        retValue.setName(name);
+
         retValue.setDepartmentList(categoryList);
         retValue.setBrand(brand);
-
+        retValue.setPackageType(packageType);
         return retValue;
 
 

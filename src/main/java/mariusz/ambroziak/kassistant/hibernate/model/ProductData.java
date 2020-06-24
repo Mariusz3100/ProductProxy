@@ -111,6 +111,9 @@ public abstract class ProductData {
 		this.description = description;
 		this.department = department;
 	}
-    
-    
+
+
+    @Override
+    public abstract ProductData clone();
+
 }
