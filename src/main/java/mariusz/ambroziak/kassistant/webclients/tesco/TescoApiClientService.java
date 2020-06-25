@@ -80,7 +80,7 @@ public class TescoApiClientService {
 			return response1;
 
 		}catch( com.sun.jersey.api.client.UniformInterfaceException e){
-			ProblemLogger.logProblem("UniformInterfaceException for term: "+phrase+". Waiting and retrying");
+		//	ProblemLogger.logProblem("UniformInterfaceException for term: "+phrase+". Waiting and retrying");
 			sleep(2000);
 			try{
 				response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);

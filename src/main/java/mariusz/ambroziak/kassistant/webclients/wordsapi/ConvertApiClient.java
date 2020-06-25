@@ -54,7 +54,7 @@ public class ConvertApiClient extends RapidApiClient {
 			if(e.getMessage().contains("404")) {
 				throw new WordNotFoundException(phrase);
 			}else {
-				ProblemLogger.logProblem("UniformInterfaceException for words api, term: "+phrase+". Waiting and retrying");
+			//	ProblemLogger.logProblem("UniformInterfaceException for words api, term: "+phrase+". Waiting and retrying");
 			}
 
 		}

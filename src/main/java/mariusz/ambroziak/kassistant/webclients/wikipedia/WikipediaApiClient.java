@@ -27,7 +27,9 @@ public class WikipediaApiClient {
 		String url=baseUrl+original;
 		try {
 		String response=getResponse(url);
-		
+		if(response==null||response.isEmpty()){
+			return null;
+		}
 		JSONObject json=new JSONObject(response);
 		
 		
@@ -82,9 +84,15 @@ public class WikipediaApiClient {
 
 		Client c = Client.create();
 		WebResource resource = c.resource(url);
+		try {
+			String response1 = resource.accept("application/json").get(String.class);
+			return response1;
 
-		String response1 = resource.accept("application/json").get(String.class);
-		return response1;
+		}catch (UniformInterfaceException e){
+			System.err.println(e.getMessage());
+		}
+
+		return "";
 	}
 
 

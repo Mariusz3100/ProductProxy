@@ -67,7 +67,7 @@ public class TescoDetailsApiClientService {
             return response1;
 
         } catch (com.sun.jersey.api.client.UniformInterfaceException e) {
-            ProblemLogger.logProblem("UniformInterfaceException for url: " + url + ". Waiting and retrying");
+       //     ProblemLogger.logProblem("UniformInterfaceException for url: " + url + ". Waiting and retrying");
             sleep(3000);
             try {
                 response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);

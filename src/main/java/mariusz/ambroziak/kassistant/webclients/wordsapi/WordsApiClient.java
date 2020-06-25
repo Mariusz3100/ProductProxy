@@ -43,7 +43,7 @@ public class WordsApiClient extends RapidApiClient {
 			if(e.getMessage().contains("404")) {
 				throw new WordNotFoundException(url);
 			}else {
-				System.err.println("UniformInterfaceException for words api, url: "+url+". Waiting and retrying");
+			//	System.err.println("UniformInterfaceException for words api, url: "+url+". Waiting and retrying");
 			}
 
 		}
