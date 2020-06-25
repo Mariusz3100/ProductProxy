@@ -66,13 +66,15 @@ public class MorrisonsClientService {
         String response1 = "";
 
         try {
-            sleep(5000);
+
+            int randomWait=(int)(Math.random()*5000)+10000;
+            sleep(randomWait);
             ++count;
             response1 = client.accept("application/json").get(String.class);
             return response1;
 
         } catch (com.sun.jersey.api.client.UniformInterfaceException e) {
-            ProblemLogger.logProblem("UniformInterfaceException for url: " + url + ". Waiting and retrying");
+         //   ProblemLogger.logProblem("UniformInterfaceException for url: " + url + ". Waiting and retrying");
             sleep(3000);
             try {
                 response1 = client.accept("application/json").get(String.class);
