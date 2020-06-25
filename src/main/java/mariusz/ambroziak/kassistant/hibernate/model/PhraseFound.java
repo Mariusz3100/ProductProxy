@@ -20,7 +20,12 @@ public class PhraseFound {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 100)
-    private WordType type;
+    private WordType wordType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 100)
+    private ProductType productType;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     private IngredientPhraseParsingResult relatedIngredientResult;
@@ -47,13 +52,6 @@ public class PhraseFound {
         this.phrase = phrase;
     }
 
-    public WordType getType() {
-        return type;
-    }
-
-    public void setType(WordType type) {
-        this.type = type;
-    }
 
     public IngredientPhraseParsingResult getRelatedIngredientResult() {
         return relatedIngredientResult;
@@ -79,9 +77,26 @@ public class PhraseFound {
         this.reasoning = reasoning;
     }
 
-    public PhraseFound(String phrase, WordType type,String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
+
+    public WordType getWordType() {
+        return wordType;
+    }
+
+    public void setWordType(WordType wordType) {
+        this.wordType = wordType;
+    }
+
+    public ProductType getProductType() {
+        return productType;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
+
+    public PhraseFound(String phrase, WordType type, String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
         this.phrase = phrase;
-        this.type = type;
+        this.wordType = type;
         this.relatedIngredientResult = relatedIngredientResult;
         this.relatedProductResult = relatedProductResult;
         this.reasoning = reasoning;
@@ -90,10 +105,12 @@ public class PhraseFound {
 
     public PhraseFound(String phrase, WordType type, String reasoning) {
         this.phrase = phrase;
-        this.type = type;
+        this.wordType = type;
         this.reasoning = reasoning;
     }
 
     public PhraseFound() {
     }
+
+
 }
