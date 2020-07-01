@@ -206,12 +206,20 @@ public class MorrisonsClientService {
             }
         }
         String packageType="";
+        String prepAndUsage="";
+
         if(bopFields.has("storageAndUsage")) {
             JSONArray json = bopFields.getJSONArray("storageAndUsage");
             for(int i=0;i<json.length();i++){
                 if("Package Type".equals(json.getJSONObject(i).getString("title")))
                     packageType+=json.getJSONObject(i).getString("content")+ MetadataConstants.stringListSeparator;
             }
+
+            for(int i=0;i<json.length();i++){
+                if("Preparation and Usage".equals(json.getJSONObject(i).getString("title")))
+                    prepAndUsage+=json.getJSONObject(i).getString("content")+ MetadataConstants.stringListSeparator;
+            }
+
         }
 
         Morrisons_Product retValue=new Morrisons_Product(name,url,description,lastCategory,categoryList,sku,ingredients);
@@ -219,6 +227,7 @@ public class MorrisonsClientService {
         retValue.setDepartmentList(categoryList);
         retValue.setBrand(brand);
         retValue.setPackageType(packageType);
+        retValue.setPrepAndUsage(prepAndUsage);
         return retValue;
 
 

@@ -21,6 +21,9 @@ public class Morrisons_Product extends ProductData{
 	@Column(length = 203)
 	private String packageType;
 
+	@Column(length = 750)
+	private String prepAndUsage;
+
 	public String getDepartmentList() {
 		return departmentList;
 	}
@@ -62,6 +65,14 @@ public class Morrisons_Product extends ProductData{
 
 	public void setPackageType(String packageType) {
 		this.packageType = packageType;
+	}
+
+	public String getPrepAndUsage() {
+		return prepAndUsage;
+	}
+
+	public void setPrepAndUsage(String prepAndUsage) {
+		this.prepAndUsage = prepAndUsage;
 	}
 
 	public Morrisons_Product(String name, String detailsUrl, String description, String department, String departmentList, String sku, String ingredients) {
