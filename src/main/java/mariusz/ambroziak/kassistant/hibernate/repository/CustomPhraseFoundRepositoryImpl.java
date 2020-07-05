@@ -1,5 +1,6 @@
 package mariusz.ambroziak.kassistant.hibernate.repository;
 
+import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.hibernate.model.PhraseFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -30,13 +31,19 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
 
     @Override
     public void saveIfNew(PhraseFound pf) {
-        if(pf==null)
+        if (pf == null)
             return;
 
-        List<PhraseFound> byPhraseAndReasoning = originalRepo.findByPhraseAndReasoning(pf.getPhrase(), pf.getReasoning());
+        List<PhraseFound> byPhraseAndReasoning = originalRepo.findByPhrase(pf.getPhrase());
 
-        if(byPhraseAndReasoning==null||byPhraseAndReasoning.size()==0){
+        if (byPhraseAndReasoning == null || byPhraseAndReasoning.size() == 0) {
             originalRepo.save(pf);
+        }else if((pf.getProductType()!=null&&!pf.getProductType().equals(ProductType.unknown))){
+            List<PhraseFound> toSave= byPhraseAndReasoning.stream()
+                    .filter(dbPhrase -> dbPhrase.getProductType() == null || dbPhrase.getProductType().equals(ProductType.unknown))
+                    .collect(Collectors.toList());
+            toSave.forEach(phraseFound -> phraseFound.setProductType(pf.getProductType()));
+            saveAll(toSave);
 
         }
     }
