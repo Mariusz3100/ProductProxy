@@ -2,6 +2,7 @@ package mariusz.ambroziak.kassistant.webclients.usda;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mariusz.ambroziak.kassistant.webclients.edamam.nlp.EdamamNlpResponseData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,16 @@ public class UsdaResponse {
 
     }
 
+    public static UsdaResponse fromJsonString(String jsonString) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(jsonString,UsdaResponse.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return  createEmpty();
+        }
+
+    }
     public static UsdaResponse createEmpty(){
         UsdaResponse ur=new UsdaResponse();
         ur.setFoods(new ArrayList<>());
