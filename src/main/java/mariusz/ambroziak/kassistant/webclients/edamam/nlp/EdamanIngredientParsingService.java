@@ -11,8 +11,10 @@ import java.util.List;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
 import mariusz.ambroziak.kassistant.hibernate.model.ProductLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.repository.EdamanResponseRepository;
 import mariusz.ambroziak.kassistant.hibernate.repository.IngredientPhraseLearningCaseRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
+import mariusz.ambroziak.kassistant.webclients.morrisons.Morrisons_Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ import org.springframework.web.client.UnknownHttpStatusCodeException;
 public class EdamanIngredientParsingService {
 
 	private final RestTemplate restTemplate;
-	
+
 	@Autowired
 	private ResourceLoader resourceLoader;
 	private Resource inputFileResource;
@@ -40,23 +42,24 @@ public class EdamanIngredientParsingService {
 	private Resource expectedOutputFileResource;
 	@Autowired
 	private IngredientPhraseLearningCaseRepository ingredientPhraseLearningCaseRepository;
-	
-	
+
+	@Autowired
+	private EdamanResponseRepository edamanResponseRepository;
 
 	private final String baseUrl="https://api.edamam.com/api/nutrition-details?app_id=1d006ca9&app_key=d089c348b9338fc421bdc6695ff34e8c";
 	public static final String csvSeparator=";";
-	
-	
+
+
 
 	@Autowired
 	public EdamanIngredientParsingService(RestTemplateBuilder restTemplateBuilder, ResourceLoader resourceLoader) {
 		this.restTemplate = restTemplateBuilder.build();
-		
+
 		this.resourceLoader = resourceLoader;
-		
+
 		this.inputFileResource=this.resourceLoader.getResource("classpath:/teachingResources/wordsInput");
 		this.expectedOutputFileResource=this.resourceLoader.getResource("classpath:/teachingResources/tomatoIngredients");
-		
+
 
 	}
 
@@ -67,7 +70,7 @@ public class EdamanIngredientParsingService {
 
 		String line=br.readLine();
 		List<IngredientLearningCase> listOfExpectedResults=new ArrayList<IngredientLearningCase>();
-		
+
 		while(line!=null) {
 			if(!line.startsWith("#")) {
 				String[] elements = line.split(";", 5);
@@ -90,8 +93,8 @@ public class EdamanIngredientParsingService {
 
 		return listOfExpectedResults;
 	}
-	
-	
+
+
 	public EdamamNlpResponseData findInApi(List<String> ingredientLines) {
 		if(ingredientLines.isEmpty()) {
 			return EdamamNlpResponseData.createEmpty();
@@ -101,16 +104,16 @@ public class EdamanIngredientParsingService {
 		for(String ingLine:ingredientLines) {
 			jArr.put(ingLine);
 		}
-		
+
 		bodyJson.put("ingr", jArr);
 
 		final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        
+
         final HttpEntity<String> entity = new HttpEntity<String>(bodyJson.toString(),headers);
-        
+
 		ResponseEntity<EdamamNlpResponseData> retValue=this.restTemplate.exchange(baseUrl, HttpMethod.POST,entity, EdamamNlpResponseData.class);
-		
+
 		return retValue.getBody();
 	}
 
@@ -118,12 +121,28 @@ public class EdamanIngredientParsingService {
 		if(param==null||param.isEmpty()) {
 			return EdamamNlpResponseData.createEmpty();
 		}
-		List<String> paramList=new ArrayList<String>();
-		paramList.add(param);
-		return findInApi(paramList);
+
+		List<Edaman_Nlp_Response> byingredientLine = edamanResponseRepository.findByingredientLine(param);
+
+		if(byingredientLine!=null&&!byingredientLine.isEmpty()){
+			String response = byingredientLine.get(0).getResponse();
+			EdamamNlpResponseData edamamNlpResponseData = EdamamNlpResponseData.fromJsonString(response);
+			return  edamamNlpResponseData;
+		}else {
+			List<String> paramList=new ArrayList<String>();
+			paramList.add(param);
+			EdamamNlpResponseData inApi = findInApi(paramList);
+			Edaman_Nlp_Response toSave=new Edaman_Nlp_Response();
+			toSave.setResponse(inApi.toJsonString());
+			toSave.setIngredientLine(param);
+			Edaman_Nlp_Response saved = edamanResponseRepository.save(toSave);
+			return inApi;
+		}
+
+
 	}
-	
-	
+
+
 //	public void retrieveAndSaveEdamanParsingDataFromFile() throws IOException {
 //		List<String> lines = readAllIngredientLines();
 //
@@ -142,18 +161,18 @@ public class EdamanIngredientParsingService {
 //
 //
 //	}
-	
-	
+
+
 	public void retrieveEdamanParsingDataFromFileSequentially() throws IOException {
-		
-		
+
+
 		InputStream inputStream = inputFileResource.getInputStream();
 		BufferedReader br=new BufferedReader(new InputStreamReader(inputStream));
 
 
 		String line=br.readLine();
 		List<String> lines=new ArrayList<String>();
-		
+
 		while(line!=null) {
 			if(!line.startsWith("#")) {
 				try {
@@ -194,10 +213,10 @@ public class EdamanIngredientParsingService {
 //		learningCase.setName(name);
 //		learningCase.setType_expected(foundType);
 //		learningCase.setUrl(url);
-		
-		
-		
-		
+
+
+
+
 	}
 
 	private String correctErrors(String phrase) {
@@ -214,7 +233,7 @@ public class EdamanIngredientParsingService {
 
 		String line=br.readLine();
 		List<String> lines=new ArrayList<String>();
-		
+
 		while(line!=null) {
 			lines.add(line);
 			line=br.readLine();
@@ -222,5 +241,5 @@ public class EdamanIngredientParsingService {
 		return lines;
 	}
 
-	
+
 }

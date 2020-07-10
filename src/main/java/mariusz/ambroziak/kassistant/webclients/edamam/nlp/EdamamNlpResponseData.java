@@ -37,6 +37,17 @@ public class EdamamNlpResponseData {
 		}
         
 	}
+
+	public static EdamamNlpResponseData fromJsonString(String jsonString) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(jsonString,EdamamNlpResponseData.class);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return  createEmpty();
+		}
+
+	}
 	
 	public static EdamamNlpResponseData createEmpty() {
 		return new EdamamNlpResponseData("",new ArrayList<EdamamNlpIngredientOuter>());
