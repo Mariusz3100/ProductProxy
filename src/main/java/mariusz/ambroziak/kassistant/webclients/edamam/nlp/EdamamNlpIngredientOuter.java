@@ -18,4 +18,7 @@ public class EdamamNlpIngredientOuter {
 		this.parsed = parsed;
 	}
 
+
+	public EdamamNlpIngredientOuter() {
+	}
 }

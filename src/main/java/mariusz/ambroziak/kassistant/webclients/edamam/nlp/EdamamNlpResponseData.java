@@ -3,6 +3,7 @@ package mariusz.ambroziak.kassistant.webclients.edamam.nlp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -52,6 +53,8 @@ public class EdamamNlpResponseData {
 	public static EdamamNlpResponseData createEmpty() {
 		return new EdamamNlpResponseData("",new ArrayList<EdamamNlpIngredientOuter>());
 	}
+
+	@JsonIgnore
 	public boolean isEmpty() {
 		return this.getUri().isEmpty()&&this.getIngredients().size()<1;
 	}
@@ -61,7 +64,7 @@ public class EdamamNlpResponseData {
 		this.uri = uri;
 		this.ingredients = ingredients;
 	}
-	
-	
-	
+
+	public EdamamNlpResponseData() {
+	}
 }

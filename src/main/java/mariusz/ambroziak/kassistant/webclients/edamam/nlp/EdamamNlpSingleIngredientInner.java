@@ -31,4 +31,8 @@ public class EdamamNlpSingleIngredientInner {
 	public void setFoodMatch(String foodMatch) {
 		this.foodMatch = foodMatch;
 	}
+
+
+	public EdamamNlpSingleIngredientInner() {
+	}
 }
