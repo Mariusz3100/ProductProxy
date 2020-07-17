@@ -7,7 +7,7 @@ import mariusz.ambroziak.kassistant.enums.WordType;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Phrase_Found")
+@Table(name = "Phrase_Found",schema = "parsing")
 public class PhraseFound {
 
     @Id

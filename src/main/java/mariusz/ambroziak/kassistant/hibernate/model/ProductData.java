@@ -6,7 +6,7 @@ import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Product_data")
+@Table(name = "Product_data",schema = "parsing")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="shop",discriminatorType = DiscriminatorType.STRING)
 public abstract class ProductData {

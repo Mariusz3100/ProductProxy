@@ -5,7 +5,6 @@ import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("tesco")
 public class Morrisons_Response{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

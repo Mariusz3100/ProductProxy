@@ -8,6 +8,8 @@ import mariusz.ambroziak.kassistant.webclients.edamam.nlp.EdamanApiQuantityExtra
 
 import javax.persistence.*;
 @Entity
+@Table(name = "ingredient_learning_case",schema = "parsing")
+
 public class IngredientLearningCase {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

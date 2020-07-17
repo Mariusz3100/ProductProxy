@@ -147,12 +147,16 @@ public class MorrisonsClientService {
         if(retValue.isEmpty()){
             retValue.addAll(this.searchInApiFor(phrase));
 
-            retValue.forEach(mp->this.morrisonProductRepository.save(mp));
+            retValue.forEach(mp-> saveMorrisonsProduct(mp));
         }
 
         return retValue;
 
 
+    }
+
+    private Morrisons_Product saveMorrisonsProduct(Morrisons_Product mp) {
+        return this.morrisonProductRepository.save(mp);
     }
 
 

@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Parsing_Batch")
+@Table(name = "Parsing_Batch",schema = "parsing")
 public class ParsingBatch {
 
     @Id

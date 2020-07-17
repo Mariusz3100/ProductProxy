@@ -6,7 +6,7 @@ import mariusz.ambroziak.kassistant.enums.ProductType;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Ingredient_Parsing_Result")
+@Table(name = "Ingredient_Parsing_Result",schema = "parsing")
 public class IngredientPhraseParsingResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

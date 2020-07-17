@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Product_Parsing_Result")
+@Table(name = "Product_Parsing_Result",schema = "parsing")
 public class ProductParsingResult {
 
     @Id

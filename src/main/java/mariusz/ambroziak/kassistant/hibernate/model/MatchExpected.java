@@ -3,6 +3,7 @@ package mariusz.ambroziak.kassistant.hibernate.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Match_Expected",schema = "parsing")
 public class MatchExpected {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
