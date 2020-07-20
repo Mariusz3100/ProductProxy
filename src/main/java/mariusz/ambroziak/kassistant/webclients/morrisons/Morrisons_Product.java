@@ -21,7 +21,7 @@ public class Morrisons_Product extends ProductData{
 	@Column(length = 203)
 	private String packageType;
 
-	@Column(length = 1200)
+	@Column(length = 1500)
 	private String prepAndUsage;
 
 	public String getDepartmentList() {
