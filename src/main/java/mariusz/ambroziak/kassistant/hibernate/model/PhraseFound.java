@@ -5,9 +5,12 @@ import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.enums.WordType;
 
 import javax.persistence.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "Phrase_Found",schema = "parsing")
+@Table(name = "Phrase_Found",schema = "parsing",uniqueConstraints = @UniqueConstraint(columnNames = {"phrase","wordType"}))
+
 public class PhraseFound {
 
     @Id
@@ -22,9 +25,8 @@ public class PhraseFound {
     @Column(length = 100)
     private WordType wordType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 100)
-    private ProductType productType;
+    @OneToMany(mappedBy = "basePhrase",cascade = CascadeType.ALL)
+    private Set<PhraseFoundProductType> phraseFoundProductType;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -86,13 +88,38 @@ public class PhraseFound {
         this.wordType = wordType;
     }
 
-    public ProductType getProductType() {
-        return productType;
+    public Set<PhraseFoundProductType> getPhraseFoundProductType() {
+        if(phraseFoundProductType==null)
+            phraseFoundProductType=new HashSet<>();
+
+        return phraseFoundProductType;
     }
 
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
+    public void setPhraseFoundProductType(Set<PhraseFoundProductType> phraseFoundProductType) {
+        this.phraseFoundProductType = phraseFoundProductType;
     }
+
+
+    public ProductType getLeadingProductType(){
+        Set<PhraseFoundProductType> phraseFoundProductType = getPhraseFoundProductType();
+
+        Map<ProductType, Long> occurenceMap = phraseFoundProductType
+                .stream().filter(p->p.getProductType()!=ProductType.unknown)
+                .collect(Collectors.groupingBy(p -> p.getProductType(), Collectors.counting()));
+
+        Optional<Map.Entry<ProductType, Long>> max = occurenceMap.entrySet()
+                .stream().max(Comparator.comparing(Map.Entry::getValue));
+
+        if(max.isPresent()){
+            return max.get().getKey();
+        }else{
+            return ProductType.unknown;
+        }
+
+
+    }
+
+
 
     public PhraseFound(String phrase, WordType type, String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
         this.phrase = phrase;

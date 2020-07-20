@@ -2,6 +2,7 @@ package mariusz.ambroziak.kassistant.hibernate.repository;
 
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.hibernate.model.PhraseFound;
+import mariusz.ambroziak.kassistant.hibernate.model.PhraseFoundProductType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -18,6 +20,9 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
     @Autowired
     @Lazy
     PhraseFoundRepository originalRepo;
+
+    @Autowired
+    PhraseFoundProductTypeRepository phraseFoundProductTypeRepository;
 
     @Override
     public void save(PhraseFound pf) {
@@ -33,18 +38,60 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
     public void saveIfNew(PhraseFound pf) {
         if (pf == null)
             return;
-
+        System.out.println(pf.getPhrase());
         List<PhraseFound> byPhraseAndReasoning = originalRepo.findByPhrase(pf.getPhrase());
 
         if (byPhraseAndReasoning == null || byPhraseAndReasoning.size() == 0) {
             originalRepo.save(pf);
-        }else if((pf.getProductType()!=null&&!pf.getProductType().equals(ProductType.unknown))){
-            List<PhraseFound> toSave= byPhraseAndReasoning.stream()
-                    .filter(dbPhrase -> dbPhrase.getProductType() == null || dbPhrase.getProductType().equals(ProductType.unknown))
-                    .collect(Collectors.toList());
-            toSave.forEach(phraseFound -> phraseFound.setProductType(pf.getProductType()));
-            saveAll(toSave);
+          //  originalRepo.flush();
+        }else{
+            if(byPhraseAndReasoning.size()>1){
+                System.err.println("Two phrases of the same type found");
+            }else{
+                PhraseFound singleFromDb = byPhraseAndReasoning.get(0);
 
+                Set<PhraseFoundProductType> typeFromDb = singleFromDb.getPhraseFoundProductType();
+                Set<PhraseFoundProductType> argumentTypes = pf.getPhraseFoundProductType();
+
+
+//                if(argumentTypes!=null&&!argumentTypes.isEmpty()) {
+//                    for (PhraseFoundProductType phraseFoundProductType : argumentTypes) {
+//                        if (phraseFoundProductType.getPfpt_id() == null) {
+//                            this.phraseFoundProductTypeRepository.save(phraseFoundProductType);
+//
+//                        }
+//
+//                    }
+//                }
+
+               if( argumentTypes.stream().anyMatch(pfpt->!typeFromDb.contains(pfpt))){
+                   Set<PhraseFoundProductType> toSave=argumentTypes.stream().filter(pfpt->!typeFromDb.contains(pfpt)).collect(Collectors.toSet());
+
+                   toSave.forEach(pfpt->pfpt.setBasePhrase(singleFromDb));
+                   typeFromDb.addAll(toSave);
+                   this.originalRepo.save(singleFromDb);
+
+       //            originalRepo.flush();
+     //              this.phraseFoundProductTypeRepository.saveAll(toSave);
+         //         this.phraseFoundProductTypeRepository.flush();
+
+
+               }
+
+                //List<PhraseFoundProductType> missing = typeFromDb.stream().filter(dbType -> !argumentTypes.contains(dbType)).collect(Collectors.toList());
+
+//                if(typeFromDb.size()>pf.getPhraseFoundProductType().size()){
+//                  for(PhraseFoundProductType phraseFoundProductType:typeFromDb){
+//                      if(phraseFoundProductType.getPfpt_id()==null){
+//                          this.phraseFoundProductTypeRepository.save(phraseFoundProductType);
+//                      }
+//                  }
+////                  pf.setPhraseFoundProductType(typeFromDb);
+////                  originalRepo.save(pf);
+//                }
+
+
+            }
         }
     }
 
