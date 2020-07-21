@@ -33,8 +33,11 @@ public class PhraseFound {
     private IngredientPhraseParsingResult relatedIngredientResult;
 
     @ManyToOne(cascade = CascadeType.ALL)
-
     private ProductParsingResult relatedProductResult;
+
+    @OneToOne
+    private PhraseFound lemmatizationBase;
+
 
     private String reasoning;
 
@@ -95,13 +98,42 @@ public class PhraseFound {
         return phraseFoundProductType;
     }
 
+    public Set<PhraseFoundProductType> getTypesFoundForPhraseAndBase() {
+        Set<PhraseFoundProductType> phraseFoundProductType = this.getPhraseFoundProductType();
+
+        if(getLemmatizationBase()!=null){
+            Set<PhraseFoundProductType> phraseFoundProductType1 = getLemmatizationBase().getPhraseFoundProductType();
+            phraseFoundProductType.addAll(phraseFoundProductType);
+        }
+
+        return phraseFoundProductType;
+
+    }
+
+
+
     public void setPhraseFoundProductType(Set<PhraseFoundProductType> phraseFoundProductType) {
         this.phraseFoundProductType = phraseFoundProductType;
     }
 
+    @Transient
+    public void addPhraseFoundProductType(PhraseFoundProductType phraseFoundProductType) {
+        this.getPhraseFoundProductType().add(phraseFoundProductType);
+
+
+    }
+
+
+    public PhraseFound getLemmatizationBase() {
+        return lemmatizationBase;
+    }
+
+    public void setLemmatizationBase(PhraseFound lemmatizationBase) {
+        this.lemmatizationBase = lemmatizationBase;
+    }
 
     public ProductType getLeadingProductType(){
-        Set<PhraseFoundProductType> phraseFoundProductType = getPhraseFoundProductType();
+        Set<PhraseFoundProductType> phraseFoundProductType = getTypesFoundForPhraseAndBase();
 
         Map<ProductType, Long> occurenceMap = phraseFoundProductType
                 .stream().filter(p->p.getProductType()!=ProductType.unknown)
