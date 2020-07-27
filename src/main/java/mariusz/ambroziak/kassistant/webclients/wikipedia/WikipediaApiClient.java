@@ -1,8 +1,12 @@
 package mariusz.ambroziak.kassistant.webclients.wikipedia;
 
+import mariusz.ambroziak.kassistant.hibernate.repository.MorrisonsResponseRepository;
+import mariusz.ambroziak.kassistant.hibernate.repository.WikipediaResponseRepository;
+import mariusz.ambroziak.kassistant.webclients.morrisons.Morrisons_Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sun.jersey.api.client.Client;
@@ -11,11 +15,15 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
+import java.util.List;
+
 @Component
 public class WikipediaApiClient {
 	public final static String baseUrl="https://en.wikipedia.org/api/rest_v1/page/title/";
 	public final static String baseUrlForSummary="https://en.wikipedia.org/api/rest_v1/page/summary/";
 
+	@Autowired
+	WikipediaResponseRepository wikipediaResponseRepository;
 
 	public String getRedirectIfAny(String original) {
 		if(original.equals("")) {
@@ -26,7 +34,7 @@ public class WikipediaApiClient {
 		}
 		String url=baseUrl+original;
 		try {
-		String response=getResponse(url);
+		String response=getProxiedResponse(url);
 		if(response==null||response.isEmpty()){
 			return null;
 		}
@@ -78,8 +86,24 @@ public class WikipediaApiClient {
 		return null;
 	}
 
+	private String getProxiedResponse(String url) {
+		List<Wikipedia_Response> byUrl = this.wikipediaResponseRepository.findByUrl(url);
 
-	private static String getResponse(String url) {
+		if(byUrl==null||byUrl.isEmpty()){
+			String response=getResponse(url);
+			Wikipedia_Response mr=new Wikipedia_Response();
+			mr.setUrl(url);
+			mr.setResponse(response);
+
+			this.wikipediaResponseRepository.save(mr);
+
+			return response;
+		}else{
+			return byUrl.get(0).getResponse();
+		}
+	}
+
+	private String getResponse(String url) {
 		ClientConfig cc = new DefaultClientConfig();
 
 		Client c = Client.create();
@@ -107,9 +131,9 @@ public class WikipediaApiClient {
 	//	String z=getRedirectIfAny("onions");
 		
 		
-		String response=getResponse("https://en.wikipedia.org/api/rest_v1/page/summary/Onions");
-		System.out.println(response);
-//		System.out.println(getResponse("https://en.wikipedia.org/api/rest_v1/page/summary/Onions"));
+//		String response=getResponse("https://en.wikipedia.org/api/rest_v1/page/summary/Onions");
+//		System.out.println(response);
+////		System.out.println(getResponse("https://en.wikipedia.org/api/rest_v1/page/summary/Onions"));
 		
 		
 	}
