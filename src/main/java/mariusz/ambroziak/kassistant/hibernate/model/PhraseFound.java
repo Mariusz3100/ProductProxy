@@ -101,9 +101,9 @@ public class PhraseFound {
     public Set<PhraseFoundProductType> getTypesFoundForPhraseAndBase() {
         Set<PhraseFoundProductType> phraseFoundProductType = this.getPhraseFoundProductType();
 
-        if(getLemmatizationBase()!=null){
-            Set<PhraseFoundProductType> phraseFoundProductType1 = getLemmatizationBase().getPhraseFoundProductType();
-            phraseFoundProductType.addAll(phraseFoundProductType);
+        if(phraseFoundProductType==null||phraseFoundProductType.isEmpty()&&getLemmatizationBase()!=null){
+            Set<PhraseFoundProductType> baseTypes = getLemmatizationBase().getPhraseFoundProductType();
+            phraseFoundProductType.addAll(baseTypes);
         }
 
         return phraseFoundProductType;
