@@ -98,7 +98,7 @@ public class PhraseFoundProductType {
     }
 
     public PhraseFoundProductType() {
-        System.out.println();
+       // System.out.println();
     }
 
     @Override

@@ -38,7 +38,7 @@ public class UsdaApiClient {
 
         if(byQuery!=null&&!byQuery.isEmpty()){
             dbCount++;
-            System.out.print(dbCount+" ");
+         //   System.out.print(dbCount+" ");
             Usda_Response usda_response = byQuery.get(0);
             String response = usda_response.getResponse();
 

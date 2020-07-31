@@ -38,7 +38,7 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
     public void saveIfNew(PhraseFound pf) {
         if (pf == null)
             return;
-        System.out.println(pf.getPhrase());
+       // System.out.println(pf.getPhrase());
         List<PhraseFound> byPhraseAndReasoning = originalRepo.findByPhrase(pf.getPhrase());
 
         if (byPhraseAndReasoning == null || byPhraseAndReasoning.size() == 0) {
