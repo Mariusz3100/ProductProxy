@@ -69,6 +69,13 @@ public class IngredientLearningCase {
 
 	}
 
+	public IngredientLearningCase(String originalPhrase, float amount, AmountTypes amountType) {
+		this.originalPhrase = originalPhrase;
+		this.foodMatch=originalPhrase;
+		this.foodTypeCategory=ProductType.unknown;
+		this.amount = amount;
+		this.amountType = amountType;
+	}
 
 	public IngredientLearningCase() {
 	}

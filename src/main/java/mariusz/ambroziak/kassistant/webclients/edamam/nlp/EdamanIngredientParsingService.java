@@ -118,7 +118,7 @@ public class EdamanIngredientParsingService {
 	}
 
 	public EdamamNlpResponseData find(String param) {
-		if(param==null||param.isEmpty()) {
+		if(param==null||param.isEmpty()||"1 tablespoon tomato purée , optional".equals(param)) {
 			return EdamamNlpResponseData.createEmpty();
 		}
 
@@ -199,7 +199,7 @@ public class EdamanIngredientParsingService {
 
 	}
 
-	public void createAndSaveIngredientLearningCase(String line) {
+	public boolean createAndSaveIngredientLearningCase(String line) {
 		try {
 			EdamamNlpResponseData found = this.find(line);
 
@@ -216,11 +216,14 @@ public class EdamanIngredientParsingService {
 					foodMatch = correctErrors(foodMatch);
 					IngredientLearningCase ilc = new IngredientLearningCase(original, inner.getQuantity(), inner.getMeasure(), foodMatch, ProductType.unknown);
 					this.ingredientPhraseLearningCaseRepository.save(ilc);
+					return true;
 				}
 			}
 		} catch (UnknownHttpStatusCodeException e) {
 			System.out.println(line + ";" + e.getLocalizedMessage());
+			return false;
 		}
+		return false;
 	}
 
 	private String correctErrors(String phrase) {
