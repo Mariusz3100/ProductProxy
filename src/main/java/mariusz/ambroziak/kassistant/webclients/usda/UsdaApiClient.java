@@ -34,6 +34,10 @@ public class UsdaApiClient {
 
 
     public UsdaResponse findInApi(String query,int size) {
+        if(query.contains("("))
+            return UsdaResponse.createEmpty();
+
+
         List<Usda_Response> byQuery = usdaResponseRepository.findByQuery(query);
 
         if(byQuery!=null&&!byQuery.isEmpty()){
@@ -65,6 +69,7 @@ public class UsdaApiClient {
                 usdaResponseRepository.save(toSave);
                 return fromApi;
             } catch (Throwable err) {
+                System.err.println("usda error for: "+query);
                 err.printStackTrace();
             }
         }
