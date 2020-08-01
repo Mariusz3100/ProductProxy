@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 @Table(name = "Phrase_Found",schema = "parsing",uniqueConstraints = @UniqueConstraint(columnNames = {"phrase","wordType"}))
 
 public class PhraseFound {
+    public  static float fullWeight=1000f;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -151,6 +153,57 @@ public class PhraseFound {
 
     }
 
+
+    public ProductType getWeightedLeadingProductType(){
+        Set<PhraseFoundProductType> phraseFoundProductType = getTypesFoundForPhraseAndBase();
+
+//        Map<ProductType, Long> occurenceMap = phraseFoundProductType
+//                .stream().filter(p->p.getProductType()!=ProductType.unknown).distinct().collect(() -> );
+
+        Map<ProductType,Float> occurenceMap= new HashMap<>();
+
+        for(PhraseFoundProductType pfpt:phraseFoundProductType){
+            if(occurenceMap.get(pfpt.getProductType())==null){
+                occurenceMap.put(pfpt.getProductType(),0f);
+            }
+
+            String original="";
+
+            if(pfpt.getRelatedIngredientResult()!=null){
+                original=pfpt.getRelatedIngredientResult().getOriginalName();
+            }
+            if(pfpt.getRelatedProductResult()!=null){
+                original=pfpt.getRelatedProductResult().getOriginalName();
+            }
+
+            float calculatedWeight=1;
+            if(!original.isEmpty()){
+                int length = original.split(" ").length;
+
+                calculatedWeight=fullWeight/length;
+
+            }else{
+                calculatedWeight=1;
+            }
+
+            Float aFloat = occurenceMap.get(pfpt.getProductType());
+            aFloat+=calculatedWeight;
+            occurenceMap.put(pfpt.getProductType(),aFloat);
+
+
+        }
+
+        Optional<Map.Entry<ProductType, Float>> max = occurenceMap.entrySet()
+                .stream().max(Comparator.comparing(Map.Entry::getValue));
+
+        if(max.isPresent()){
+            return max.get().getKey();
+        }else{
+            return ProductType.unknown;
+        }
+
+
+    }
 
 
     public PhraseFound(String phrase, WordType type, String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
