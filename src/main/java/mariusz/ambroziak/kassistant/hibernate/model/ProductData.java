@@ -17,7 +17,7 @@ public abstract class ProductData {
     protected String url;
     @Column(length = 500)
     protected String name;
-    @Column(length = 2000)
+    @Column(length = 4000)
     protected String description;
     @Column(length = 500)
     protected String department;
