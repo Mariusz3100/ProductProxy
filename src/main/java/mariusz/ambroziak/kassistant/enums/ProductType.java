@@ -8,6 +8,7 @@ public enum ProductType{
 	processed("processed"),
 	puree("puree"),
 	juice("juice"),
+	flavoured("flavoured"),
 	unknown("unknown");
 
 	private String name;
