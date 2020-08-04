@@ -24,7 +24,7 @@ import java.util.*;
 public class MorrisonsClientService {
     private static final String DETAILS_BASE_URL = "https://groceries.morrisons.com/webshop/api/v1/products/__sku__/details";
     private static final String SEARCH_BASE_URL = "https://groceries.morrisons.com/webshop/api/v1/search?searchTerm=";
-
+    private static final String PRODUCTS_URL_START = "https://groceries.morrisons.com/webshop/api/v1/products/";
 //	private static final String DETAILS_BASE_URL = "";
 //	private static final String DETAILS_BASE_URL = "http://localhost:8085/proxy/product?url=https://dev.tescolabs.com/product/?tpnb=";
 
@@ -159,6 +159,19 @@ public class MorrisonsClientService {
         return this.morrisonProductRepository.save(mp);
     }
 
+    public List<Morrisons_Product> saveInDbAllCachedProducts(){
+        List<Morrisons_Product> retValue=new ArrayList<>();
+        List<Morrisons_Response> byStartingWith = this.morrisonsResponseRepository.findByUrlStartingWith(PRODUCTS_URL_START);
+
+
+        for(Morrisons_Response mr:byStartingWith){
+            Morrisons_Product product = parseResponseIntoProductObject(mr.getUrl(), mr.getResponse());
+            this.morrisonProductRepository.save(product);
+            retValue.add(product);
+        }
+
+        return  retValue;
+    }
 
     public List<Morrisons_Product> searchInApiFor(String phrase){
         List<Morrisons_Product> retValue=new ArrayList<>();
@@ -181,6 +194,13 @@ public class MorrisonsClientService {
     public Morrisons_Product getProductForUrl(String url) {
         String response=getProxiedResponse(url);
 
+        Morrisons_Product retValue = parseResponseIntoProductObject(url, response);
+        return retValue;
+
+
+    }
+
+    private Morrisons_Product parseResponseIntoProductObject(String url, String response) {
         JSONObject root=new JSONObject(response);
 
         JSONObject product = root.getJSONObject("product");
@@ -233,8 +253,6 @@ public class MorrisonsClientService {
         retValue.setPackageType(packageType);
         retValue.setPrepAndUsage(prepAndUsage);
         return retValue;
-
-
     }
 
     public static void main(String[] args){

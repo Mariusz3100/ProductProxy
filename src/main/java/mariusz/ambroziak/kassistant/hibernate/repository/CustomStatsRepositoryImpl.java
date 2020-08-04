@@ -65,7 +65,7 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
 
     public void saveProductStatsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult) {
         if(wordsToSave==null||wordsToSave.isEmpty()||productParsingResult==null)
-            throw new IllegalArgumentException("Empty word list for stats provided");
+            System.err.println("Empty word list for stats provided");//throw new IllegalArgumentException("Empty word list for stats provided");
 
         for(Token token:wordsToSave){
             Word savedWord=this.getOrSave(token.getText(),token.getLemma());
