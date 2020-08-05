@@ -1,6 +1,8 @@
 package mariusz.ambroziak.kassistant.hibernate.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Word",schema = "statistics")
@@ -14,6 +16,38 @@ public class Word {
 
     @Column
     private String lemma;
+
+
+
+    @OneToMany(mappedBy = "word",cascade = CascadeType.ALL)
+    List<ProductWordOccurence> productWordOccurences;
+
+
+    @OneToMany(mappedBy = "word",cascade = CascadeType.ALL)
+    List<IngredientWordOccurence> ingredientWordOccurenceList;
+
+
+    public List<ProductWordOccurence> getProductWordOccurences() {
+        if(productWordOccurences==null)
+            return new ArrayList<>();
+        else
+            return productWordOccurences;
+    }
+
+    public void setProductWordOccurences(List<ProductWordOccurence> productWordOccurences) {
+        this.productWordOccurences = productWordOccurences;
+    }
+
+    public List<IngredientWordOccurence> getIngredientWordOccurenceList() {
+        if(ingredientWordOccurenceList==null)
+            return new ArrayList<>();
+        else
+            return ingredientWordOccurenceList;
+    }
+
+    public void setIngredientWordOccurenceList(List<IngredientWordOccurence> ingredientWordOccurenceList) {
+        this.ingredientWordOccurenceList = ingredientWordOccurenceList;
+    }
 
     public String getText() {
         return text;

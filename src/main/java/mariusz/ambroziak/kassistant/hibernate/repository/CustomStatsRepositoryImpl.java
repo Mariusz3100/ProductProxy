@@ -47,10 +47,11 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
 
 
     public void saveIngredientStatsData(List<? extends Token> wordsToSave, IngredientPhraseParsingResult ingredientPhraseParsingResult) {
+        if(ingredientPhraseParsingResult==null||ingredientPhraseParsingResult.getOriginalName()==null)
+            throw new IllegalArgumentException("null ingredientPhraseParsingResult for stats provided");
 
-
-        if(wordsToSave==null||wordsToSave.isEmpty()||ingredientPhraseParsingResult==null)
-            throw new IllegalArgumentException("Empty word list for stats provided");
+        if(wordsToSave==null||wordsToSave.isEmpty())
+            throw new IllegalArgumentException("Empty word list for stats provided for phrase: "+ingredientPhraseParsingResult.getOriginalName());
 
         for(Token token:wordsToSave){
             Word savedWord=this.getOrSave(token.getText(),token.getLemma());
@@ -64,8 +65,11 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
 
 
     public void saveProductStatsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult) {
-        if(wordsToSave==null||wordsToSave.isEmpty()||productParsingResult==null)
-            System.err.println("Empty word list for stats provided");//throw new IllegalArgumentException("Empty word list for stats provided");
+        if(productParsingResult==null||productParsingResult.getOriginalName()==null)
+            throw new IllegalArgumentException("null ingredientPhraseParsingResult for stats provided");
+
+        if(wordsToSave==null||wordsToSave.isEmpty())
+            throw new IllegalArgumentException("Empty word list for stats provided for phrase: "+productParsingResult.getOriginalName());
 
         for(Token token:wordsToSave){
             Word savedWord=this.getOrSave(token.getText(),token.getLemma());

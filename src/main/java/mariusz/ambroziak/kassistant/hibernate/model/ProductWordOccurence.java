@@ -45,4 +45,7 @@ public class ProductWordOccurence {
         this.word = word;
         this.productParsingResult = productParsingResult;
     }
+
+    public ProductWordOccurence() {
+    }
 }
