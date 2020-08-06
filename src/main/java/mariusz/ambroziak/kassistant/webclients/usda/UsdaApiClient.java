@@ -31,14 +31,31 @@ public class UsdaApiClient {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-
-
     public UsdaResponse findInApi(String query,int size) {
+        return findInApi(query,size,null);
+    }
+
+
+    public UsdaResponse findInApi(String query,int size,List<String> types) {
         if(query.contains("("))
             return UsdaResponse.createEmpty();
 
 
-        List<Usda_Response> byQuery = usdaResponseRepository.findByQuery(query);
+        JSONObject bodyJson = new JSONObject();
+        bodyJson.put("query", query);
+        bodyJson.put("pageSize", size);
+
+
+        if(types!=null&&!types.isEmpty()) {
+            JSONArray dataTypes = new JSONArray();
+
+            types.forEach(t->dataTypes.put(t));
+
+            bodyJson.put("dataType", dataTypes);
+        }
+
+
+        List<Usda_Response> byQuery = usdaResponseRepository.findByQueryJson(bodyJson.toString());
 
         if(byQuery!=null&&!byQuery.isEmpty()){
             dbCount++;
@@ -51,9 +68,6 @@ public class UsdaApiClient {
         }else {
             apiCount++;
             System.err.print(apiCount+" ");
-            JSONObject bodyJson = new JSONObject();
-            bodyJson.put("query", query);
-            bodyJson.put("pageSize", size);
 
             final HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -64,7 +78,7 @@ public class UsdaApiClient {
 
                 UsdaResponse fromApi = retValue.getBody();
                 Usda_Response toSave=new Usda_Response();
-                toSave.setQuery(query);
+                toSave.setQueryJson(bodyJson.toString());
                 toSave.setResponse(fromApi.toJsonString());
                 usdaResponseRepository.save(toSave);
                 return fromApi;

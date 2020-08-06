@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UsdaResponseRepository extends CrudRepository<Usda_Response,Long> {
 
-    List<Usda_Response> findByQuery(String query);
+    List<Usda_Response> findByQueryJson(String queryJson);
 
 
 }

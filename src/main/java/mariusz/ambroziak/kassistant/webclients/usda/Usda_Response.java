@@ -3,6 +3,7 @@ package mariusz.ambroziak.kassistant.webclients.usda;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Usda_Response",schema = "cache")
 public class Usda_Response {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +14,7 @@ public class Usda_Response {
 	private String response;
 
 	@Column(length = 500)
-	private String query;
+	private String queryJson;
 
 
 
@@ -26,14 +27,13 @@ public class Usda_Response {
 		this.response = response;
 	}
 
-	public String getQuery() {
-		return query;
+	public String getQueryJson() {
+		return queryJson;
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
+	public void setQueryJson(String queryJson) {
+		this.queryJson = queryJson;
 	}
-
 
 	public Long getUr_id() {
 		return ur_id;
