@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.model;
 
+import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,9 @@ public class Word {
     @Column
     private String lemma;
 
+    private String tag;
 
+    private String pos;
 
     @OneToMany(mappedBy = "word",cascade = CascadeType.ALL)
     List<ProductWordOccurence> productWordOccurences;
@@ -25,6 +29,15 @@ public class Word {
 
     @OneToMany(mappedBy = "word",cascade = CascadeType.ALL)
     List<IngredientWordOccurence> ingredientWordOccurenceList;
+
+    public Word(Token token) {
+        this.text=token.getText();
+        this.lemma=token.getLemma();
+        this.pos=token.getPos();
+        this.tag=token.getTag();
+
+
+    }
 
 
     public List<ProductWordOccurence> getProductWordOccurences() {
@@ -63,6 +76,22 @@ public class Word {
 
     public void setLemma(String lemma) {
         this.lemma = lemma;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
     }
 
     public Word(String text, String lemma) {

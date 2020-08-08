@@ -11,6 +11,8 @@ import java.util.List;
 public interface CustomStatsRepository {
     public Word getOrSave(String text,String lemma);
 
+    public Word getOrSave(Token token);
+
     public void saveIngredientStatsData(List<? extends Token> wordsToSave,IngredientPhraseParsingResult ingredientPhraseParsingResult);
 
     public void saveProductStatsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult);
