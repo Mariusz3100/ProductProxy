@@ -9,12 +9,11 @@ import java.util.List;
 
 
 import mariusz.ambroziak.kassistant.enums.ProductType;
-import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
-import mariusz.ambroziak.kassistant.hibernate.model.ProductLearningCase;
-import mariusz.ambroziak.kassistant.hibernate.repository.EdamanResponseRepository;
-import mariusz.ambroziak.kassistant.hibernate.repository.IngredientPhraseLearningCaseRepository;
+import mariusz.ambroziak.kassistant.hibernate.cache.model.Edaman_Nlp_Response;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.IngredientLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.cache.repositories.EdamanResponseRepository;
+import mariusz.ambroziak.kassistant.hibernate.parsing.repository.IngredientPhraseLearningCaseRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
-import mariusz.ambroziak.kassistant.webclients.morrisons.Morrisons_Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

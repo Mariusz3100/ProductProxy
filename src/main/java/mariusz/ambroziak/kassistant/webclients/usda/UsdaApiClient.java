@@ -1,7 +1,6 @@
 package mariusz.ambroziak.kassistant.webclients.usda;
 
-import mariusz.ambroziak.kassistant.hibernate.repository.UsdaResponseRepository;
-import mariusz.ambroziak.kassistant.webclients.edamam.nlp.EdamamNlpResponseData;
+import mariusz.ambroziak.kassistant.hibernate.cache.repositories.UsdaResponseRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,10 @@
 package mariusz.ambroziak.kassistant.webclients.morrisons;
 
-import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.ProductData;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.util.Objects;
 
 @Entity
 @DiscriminatorValue("morrisons")

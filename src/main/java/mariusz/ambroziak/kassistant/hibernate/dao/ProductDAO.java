@@ -2,7 +2,7 @@ package mariusz.ambroziak.kassistant.hibernate.dao;
 
 import java.util.List;
 
-import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.ProductData;
 
 
 public interface ProductDAO {

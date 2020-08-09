@@ -1,8 +1,6 @@
 package mariusz.ambroziak.kassistant.webclients.wikipedia;
 
-import mariusz.ambroziak.kassistant.hibernate.repository.MorrisonsResponseRepository;
-import mariusz.ambroziak.kassistant.hibernate.repository.WikipediaResponseRepository;
-import mariusz.ambroziak.kassistant.webclients.morrisons.Morrisons_Response;
+import mariusz.ambroziak.kassistant.hibernate.cache.repositories.WikipediaResponseRepository;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

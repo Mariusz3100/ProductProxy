@@ -5,22 +5,17 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.core.util.MultivaluedMapImpl;
 import mariusz.ambroziak.kassistant.enums.AmountTypes;
 import mariusz.ambroziak.kassistant.enums.ProductType;
-import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
-import mariusz.ambroziak.kassistant.hibernate.repository.WebknoxResponseRepository;
-import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.IngredientLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.cache.repositories.WebknoxResponseRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.QuantityTranslation;
-import mariusz.ambroziak.kassistant.webclients.edamam.nlp.EdamanApiQuantityExtractor;
 import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
-import mariusz.ambroziak.kassistant.webclients.wordsapi.WordNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.MultivaluedMap;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +44,7 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 		String response1 ="";
 
 		try{
-			response1 = clientWithHeaders.accept("application/json").get(String.class);
+	//		response1 = clientWithHeaders.accept("application/json").get(String.class);
 			return response1;
 
 		}catch( com.sun.jersey.api.client.UniformInterfaceException e){

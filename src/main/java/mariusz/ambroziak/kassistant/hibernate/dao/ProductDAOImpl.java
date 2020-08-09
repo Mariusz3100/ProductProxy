@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.ProductData;
 import mariusz.ambroziak.kassistant.webclients.tesco.Tesco_Product;
 
 

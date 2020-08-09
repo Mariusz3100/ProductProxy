@@ -3,9 +3,7 @@ package mariusz.ambroziak.kassistant.webclients.tesco;
 
 import java.util.*;
 
-import mariusz.ambroziak.kassistant.hibernate.model.ProductData;
-import mariusz.ambroziak.kassistant.hibernate.repository.ProductRepository;
-import mariusz.ambroziak.kassistant.hibernate.repository.TescoProductRepository;
+import mariusz.ambroziak.kassistant.hibernate.parsing.repository.TescoProductRepository;
 import mariusz.ambroziak.kassistant.pojos.quantity.PreciseQuantity;
 import mariusz.ambroziak.kassistant.utils.ProblemLogger;
 
@@ -14,8 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.sun.jersey.api.client.Client;

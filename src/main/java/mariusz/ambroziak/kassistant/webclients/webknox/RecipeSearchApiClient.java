@@ -6,14 +6,10 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
-import mariusz.ambroziak.kassistant.enums.AmountTypes;
-import mariusz.ambroziak.kassistant.hibernate.model.IngredientLearningCase;
-import mariusz.ambroziak.kassistant.hibernate.repository.IngredientPhraseLearningCaseRepository;
-import mariusz.ambroziak.kassistant.hibernate.repository.IngredientWordOccurenceRepository;
-import mariusz.ambroziak.kassistant.hibernate.repository.WebknoxResponseRepository;
-import mariusz.ambroziak.kassistant.pojos.quantity.QuantityTranslation;
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.IngredientLearningCase;
+import mariusz.ambroziak.kassistant.hibernate.parsing.repository.IngredientPhraseLearningCaseRepository;
+import mariusz.ambroziak.kassistant.hibernate.cache.repositories.WebknoxResponseRepository;
 import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
-import mariusz.ambroziak.kassistant.webclients.wordsapi.WordNotFoundException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +92,7 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 
 		try{
-			response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);
+	//		response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);
 			return response1;
 
 		}catch( com.sun.jersey.api.client.UniformInterfaceException e){
