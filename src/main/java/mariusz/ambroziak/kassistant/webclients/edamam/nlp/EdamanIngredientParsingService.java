@@ -84,6 +84,7 @@ public class EdamanIngredientParsingService {
 				float multiplier = Float.parseFloat(multiplierString);
 				PreciseQuantity pq = EdamanApiQuantityExtractor.getResultingQuantity(multiplier, containerPhraseString);
 				IngredientLearningCase er = new IngredientLearningCase(phrase, pq.getAmount(), containerPhraseString, foodFound, pt);
+				er.setSource("File");
 
 				listOfExpectedResults.add(er);
 			}
@@ -215,6 +216,8 @@ public class EdamanIngredientParsingService {
 					String foodMatch = inner.getFoodMatch();
 					foodMatch = correctErrors(foodMatch);
 					IngredientLearningCase ilc = new IngredientLearningCase(original, inner.getQuantity(), inner.getMeasure(), foodMatch, ProductType.unknown);
+					ilc.setSource("edaman");
+
 					this.ingredientPhraseLearningCaseRepository.save(ilc);
 					return true;
 				}

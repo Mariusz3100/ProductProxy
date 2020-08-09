@@ -17,6 +17,9 @@ public class IngredientLearningCase {
 
 
 	private String originalPhrase;
+
+	private String source;
+
 	private String foodMatch;
 	private float amount;
 
@@ -103,5 +106,13 @@ public class IngredientLearningCase {
 
 	public void setIlc_id(Long ilc_id) {
 		this.ilc_id = ilc_id;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }
