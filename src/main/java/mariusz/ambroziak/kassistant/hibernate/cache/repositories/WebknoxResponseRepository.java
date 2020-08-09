@@ -1,5 +1,6 @@
 package mariusz.ambroziak.kassistant.hibernate.cache.repositories;
 
+import mariusz.ambroziak.kassistant.hibernate.cache.model.Morrisons_Response;
 import mariusz.ambroziak.kassistant.webclients.webknox.WebknoxResponse;
 import org.springframework.data.repository.CrudRepository;
 
@@ -9,6 +10,7 @@ public interface WebknoxResponseRepository extends CrudRepository<WebknoxRespons
 
     List<WebknoxResponse> findByUrl(String url);
     List<WebknoxResponse> findByQuery(String query);
+    List<WebknoxResponse> findByUrlStartingWith(String text);
 
 
 }

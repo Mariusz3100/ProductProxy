@@ -81,7 +81,16 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 		
 		String response= getProxiedResponse(url);
 
+		List<IngredientLearningCase> ingredientLearningCases = parseResponseIntoIngredientCases(response);
+		retValue.addAll(ingredientLearningCases);
+
+		return  retValue;
+
+	}
+
+	public List<IngredientLearningCase> parseResponseIntoIngredientCases(String response) {
 		JSONObject root=new JSONObject(response);
+		List<IngredientLearningCase> retValue=new ArrayList<>();
 
 		JSONArray results = root.getJSONArray("extendedIngredients");
 
@@ -104,7 +113,7 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 			}
 		}
 
-		return  retValue;
+		return retValue;
 
 	}
 

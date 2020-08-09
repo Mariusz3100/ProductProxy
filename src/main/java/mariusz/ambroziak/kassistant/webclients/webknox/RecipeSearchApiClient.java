@@ -6,9 +6,11 @@ import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+import mariusz.ambroziak.kassistant.hibernate.cache.model.Morrisons_Response;
 import mariusz.ambroziak.kassistant.hibernate.parsing.model.IngredientLearningCase;
 import mariusz.ambroziak.kassistant.hibernate.parsing.repository.IngredientPhraseLearningCaseRepository;
 import mariusz.ambroziak.kassistant.hibernate.cache.repositories.WebknoxResponseRepository;
+import mariusz.ambroziak.kassistant.webclients.morrisons.Morrisons_Product;
 import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,10 +20,13 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.core.MultivaluedMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
 public class RecipeSearchApiClient extends RapidApiClient {
+	private static final String PRODUCTS_URL_START = "https://webknox-recipes.p.rapidapi.com/recipes/";
+
 
 	public static final String baseUrl="https://webknox-recipes.p.rapidapi.com/recipes/search";
 	private static final String header1Value="webknox-recipes.p.rapidapi.com";
@@ -124,6 +129,40 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 		return  retValue;
 
+	}
+
+
+
+
+	public List<IngredientLearningCase> saveInDbAllCachedIngredients(){
+		List<IngredientLearningCase> retValue=new ArrayList<>();
+		List<WebknoxResponse> byStartingWith = this.webknoxResponseRepository.findByUrlStartingWith(PRODUCTS_URL_START);
+
+
+		for(WebknoxResponse wkr:byStartingWith){
+			List<IngredientLearningCase> ingredientLearningCases = recipeDetailsApiClient.parseResponseIntoIngredientCases(wkr.getResponse());
+			retValue.addAll(ingredientLearningCases);
+		}
+
+		this.ingredientPhraseLearningCaseRepository.saveAll(retValue);
+		return  retValue;
+	}
+
+
+	public List<IngredientLearningCase> saveInDbAllCachedIngredientsFor(String phrase){
+		List<IngredientLearningCase> retValue=new ArrayList<>();
+		List<WebknoxResponse> byStartingWith = this.webknoxResponseRepository.findByUrlStartingWith(PRODUCTS_URL_START);
+
+
+		for(WebknoxResponse wkr:byStartingWith){
+			List<IngredientLearningCase> ingredientLearningCases = recipeDetailsApiClient.parseResponseIntoIngredientCases(wkr.getResponse());
+			retValue.addAll(ingredientLearningCases);
+		}
+
+		retValue=retValue.stream().filter(ilc->ilc.getOriginalPhrase().contains(phrase)).collect(Collectors.toList());
+
+		this.ingredientPhraseLearningCaseRepository.saveAll(retValue);
+		return  retValue;
 	}
 
 
