@@ -36,7 +36,7 @@ public class UsdaApiClient {
 
 
     public UsdaResponse findInApi(String query,int size,List<String> types) {
-        if(query.contains("("))
+        if(query.contains("(")||query.contains(")")||query.contains(":"))
             return UsdaResponse.createEmpty();
 
 

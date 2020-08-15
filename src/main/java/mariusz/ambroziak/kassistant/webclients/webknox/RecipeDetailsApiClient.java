@@ -44,7 +44,7 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 		String response1 ="";
 
 		try{
-	//		response1 = clientWithHeaders.accept("application/json").get(String.class);
+			response1 = clientWithHeaders.accept("application/json").get(String.class);
 			return response1;
 
 		}catch( com.sun.jersey.api.client.UniformInterfaceException e){

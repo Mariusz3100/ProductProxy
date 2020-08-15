@@ -67,12 +67,13 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 		if(byQuery==null||byQuery.isEmpty()){
 			String response = getResponse(phrase);
+			if(response!=null&&!response.trim().isEmpty()) {
+				WebknoxResponse wkr = new WebknoxResponse();
+				wkr.setQuery(phrase);
+				wkr.setResponse(response);
 
-			WebknoxResponse wkr=new WebknoxResponse();
-			wkr.setQuery(phrase);
-			wkr.setResponse(response);
-
-			this.webknoxResponseRepository.save(wkr);
+				this.webknoxResponseRepository.save(wkr);
+			}
 			return response;
 		}else {
 			return byQuery.get(0).getResponse();
@@ -97,7 +98,7 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 
 		try{
-	//		response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);
+			response1 = clientWithParamsAndHeader.accept("application/json").get(String.class);
 			return response1;
 
 		}catch( com.sun.jersey.api.client.UniformInterfaceException e){

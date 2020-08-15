@@ -17,7 +17,7 @@ public class Morrisons_Product extends ProductData{
 	private String sku;
 	@Column(length = 1000)
 	private String ingredients;
-	@Column(length = 203)
+	@Column(length = 403)
 	private String packageType;
 
 	@Column(length = 2111)
