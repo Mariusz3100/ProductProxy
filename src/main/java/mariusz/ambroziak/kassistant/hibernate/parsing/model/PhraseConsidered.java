@@ -55,4 +55,10 @@ public abstract class PhraseConsidered {
     }
 
 
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPc_id(), getProductParsingResult(), getIngredientPhraseParsingResult());
+    }
 }

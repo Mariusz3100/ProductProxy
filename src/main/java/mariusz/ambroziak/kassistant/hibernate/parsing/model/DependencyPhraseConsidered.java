@@ -30,4 +30,29 @@ public class DependencyPhraseConsidered extends  PhraseConsidered{
     public void setChild(SavedToken child) {
         this.child = child;
     }
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof DependencyPhraseConsidered)){
+            return false;
+        }else {
+            DependencyPhraseConsidered that=(DependencyPhraseConsidered)o;
+            if((getChild().equals(that.getChild())&&getHead().equals(that.getHead()))
+                    ||(getChild().getText().equals(that.getChild().getText())&&getHead().getText().equals(that.getHead().getText()))
+                    ||(getChild().getLemma().equals(that.getChild().getLemma())&&getHead().getLemma().equals(that.getHead().getLemma()))
+                    ||(getHead().getText().equals(that.getChild().getText())&&getChild().getText().equals(that.getHead().getText()))
+                    ||(getHead().getLemma().equals(that.getChild().getLemma())&&getChild().getLemma().equals(that.getHead().getLemma()))
+            ){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+    }
+
 }
+
