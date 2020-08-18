@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.statistical.model;
 
+import mariusz.ambroziak.kassistant.enums.AmountTypes;
+import mariusz.ambroziak.kassistant.enums.StatsWordType;
 import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
 
 import javax.persistence.*;
@@ -29,6 +31,11 @@ public class Word {
 
     @OneToMany(mappedBy = "word",cascade = CascadeType.ALL)
     List<IngredientWordOccurence> ingredientWordOccurenceList;
+
+
+    @Enumerated(EnumType.STRING)
+    private StatsWordType statsWordType;
+
 
     public Word(Token token) {
         this.text=token.getText();
@@ -108,5 +115,13 @@ public class Word {
     }
 
     public Word() {
+    }
+
+    public StatsWordType getStatsWordType() {
+        return statsWordType;
+    }
+
+    public void setStatsWordType(StatsWordType statsWordType) {
+        this.statsWordType = statsWordType;
     }
 }

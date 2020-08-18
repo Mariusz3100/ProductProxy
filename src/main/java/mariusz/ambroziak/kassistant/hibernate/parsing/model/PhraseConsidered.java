@@ -1,5 +1,6 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mariusz.ambroziak.kassistant.pojos.QualifiedToken;
 import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
 import org.hibernate.validator.constraints.CompositionType;
@@ -23,8 +24,10 @@ public abstract class PhraseConsidered {
 
 
     @OneToOne
+    @JsonIgnore
     private ProductParsingResult productParsingResult;
     @OneToOne
+    @JsonIgnore
     private IngredientPhraseParsingResult ingredientPhraseParsingResult;
 
 

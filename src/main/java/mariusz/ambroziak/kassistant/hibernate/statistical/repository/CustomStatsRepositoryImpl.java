@@ -79,10 +79,15 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
             System.err.println("Empty word list for stats provided for phrase: "+ingredientPhraseParsingResult.getOriginalName());
 
         for(Token token:wordsToSave){
-            Word savedWord=this.getOrSave(token);
+            try {
+                Word savedWord = this.getOrSave(token);
 
-            IngredientWordOccurence ingredientWordOccurence=new IngredientWordOccurence(savedWord,ingredientPhraseParsingResult);
-            this.ingredientWordOccurenceRepository.save(ingredientWordOccurence);
+                IngredientWordOccurence ingredientWordOccurence = new IngredientWordOccurence(savedWord, ingredientPhraseParsingResult);
+                this.ingredientWordOccurenceRepository.save(ingredientWordOccurence);
+            }catch (IllegalArgumentException e){
+                e.printStackTrace();
+
+            }
 
         }
 

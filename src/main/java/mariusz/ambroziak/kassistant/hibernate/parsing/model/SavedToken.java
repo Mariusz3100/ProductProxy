@@ -141,4 +141,14 @@ public class SavedToken {
 
 	}
 
+	public boolean equalsToken(Token token) {
+
+		return	Objects.equals(getText(), token.getText()) &&
+				Objects.equals(getLemma(), token.getLemma()) &&
+				Objects.equals(getTag(), token.getTag()) &&
+				Objects.equals(getRelationToParentType(), token.getRelationToParentType()) &&
+				Objects.equals(getPos(), token.getPos()) &&
+				Objects.equals(getHead(), token.getHead());
+	}
+
 }

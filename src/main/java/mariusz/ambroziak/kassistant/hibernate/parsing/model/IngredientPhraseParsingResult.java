@@ -2,8 +2,11 @@ package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 import mariusz.ambroziak.kassistant.enums.AmountTypes;
 import mariusz.ambroziak.kassistant.enums.ProductType;
+import mariusz.ambroziak.kassistant.hibernate.statistical.model.IngredientWordOccurence;
+import mariusz.ambroziak.kassistant.hibernate.statistical.model.ProductWordOccurence;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Ingredient_Parsing_Result",schema = "parsing")
@@ -33,6 +36,10 @@ public class IngredientPhraseParsingResult {
 
     @Enumerated(EnumType.STRING)
     private ProductType typeCalculated;
+
+
+    @OneToMany(mappedBy = "ingredientPhraseParsingResult")
+    private List<IngredientWordOccurence> wordsOccuring;
 
     public IngredientPhraseParsingResult() {
 
@@ -110,6 +117,14 @@ public class IngredientPhraseParsingResult {
 
     public void setParsingBatch(ParsingBatch parsingBatch) {
         this.parsingBatch = parsingBatch;
+    }
+
+    public List<IngredientWordOccurence> getWordsOccuring() {
+        return wordsOccuring;
+    }
+
+    public void setWordsOccuring(List<IngredientWordOccurence> wordsOccuring) {
+        this.wordsOccuring = wordsOccuring;
     }
 
     public IngredientPhraseParsingResult(String originalName, double edamamAmount, AmountTypes edamamAmountType, ProductType edamamProductType, String minimalResultsCalculated, String extendedResultsCalculated, ProductType typeCalculated) {

@@ -1,8 +1,10 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 import mariusz.ambroziak.kassistant.enums.ProductType;
+import mariusz.ambroziak.kassistant.hibernate.statistical.model.ProductWordOccurence;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,6 +29,9 @@ public class ProductParsingResult {
 
     @Enumerated(EnumType.STRING)
     private ProductType typeCalculated;
+
+    @OneToMany(mappedBy = "productParsingResult")
+    private List<ProductWordOccurence> wordsOccuring;
 
     public ProductParsingResult() {
 
@@ -110,5 +115,14 @@ public class ProductParsingResult {
     @Override
     public int hashCode() {
         return Objects.hash(getProduct(), getOriginalName(), getMinimalResultsCalculated(), getExtendedResultsCalculated(), getTypeCalculated());
+    }
+
+
+    public List<ProductWordOccurence> getWordsOccuring() {
+        return wordsOccuring;
+    }
+
+    public void setWordsOccuring(List<ProductWordOccurence> wordsOccuring) {
+        this.wordsOccuring = wordsOccuring;
     }
 }

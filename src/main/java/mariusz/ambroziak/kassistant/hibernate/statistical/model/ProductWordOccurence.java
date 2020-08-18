@@ -1,5 +1,6 @@
 package mariusz.ambroziak.kassistant.hibernate.statistical.model;
 
+import mariusz.ambroziak.kassistant.hibernate.parsing.model.IngredientPhraseParsingResult;
 import mariusz.ambroziak.kassistant.hibernate.parsing.model.ProductParsingResult;
 
 import javax.persistence.*;
@@ -17,7 +18,8 @@ public class ProductWordOccurence {
 
     @OneToOne
     ProductParsingResult productParsingResult;
-
+    @OneToOne
+    IngredientPhraseParsingResult ingredientPhraseParsingResult;
 
     public Long getPwo_id() {
         return pwo_id;
@@ -41,6 +43,14 @@ public class ProductWordOccurence {
 
     public void setProductParsingResult(ProductParsingResult productParsingResult) {
         this.productParsingResult = productParsingResult;
+    }
+
+    public IngredientPhraseParsingResult getIngredientPhraseParsingResult() {
+        return ingredientPhraseParsingResult;
+    }
+
+    public void setIngredientPhraseParsingResult(IngredientPhraseParsingResult ingredientPhraseParsingResult) {
+        this.ingredientPhraseParsingResult = ingredientPhraseParsingResult;
     }
 
     public ProductWordOccurence(Word word, ProductParsingResult productParsingResult) {
