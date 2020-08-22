@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "SavedToken",schema = "parsing",uniqueConstraints=
-@UniqueConstraint(columnNames={"text", "lemma","tag","relationToParentType","pos","head"}))
+@UniqueConstraint(columnNames={"text", "lemma","tag","pos"}))
 
 public class SavedToken {
 	@Id
@@ -23,9 +23,9 @@ public class SavedToken {
 	private String text;
 	private String lemma;
 	private String tag;
-	private String relationToParentType;
+//	private String relationToParentType;
 	private String pos;
-	private String head;
+	//private String head;
 
 
 	public int getToken_id() {
@@ -68,13 +68,13 @@ public class SavedToken {
 		this.tag = tag;
 	}
 
-	public String getRelationToParentType() {
-		return relationToParentType;
-	}
-
-	public void setRelationToParentType(String relationToParentType) {
-		this.relationToParentType = relationToParentType;
-	}
+//	public String getRelationToParentType() {
+//		return relationToParentType;
+//	}
+//
+//	public void setRelationToParentType(String relationToParentType) {
+//		this.relationToParentType = relationToParentType;
+//	}
 
 	public String getPos() {
 		return pos;
@@ -84,13 +84,13 @@ public class SavedToken {
 		this.pos = pos;
 	}
 
-	public String getHead() {
-		return head;
-	}
+//	public String getHead() {
+//		return head;
+//	}
 
-	public void setHead(String head) {
-		this.head = head;
-	}
+//	public void setHead(String head) {
+//		this.head = head;
+//	}
 
 	public SavedToken() {
 	}
@@ -104,14 +104,14 @@ public class SavedToken {
 		return	Objects.equals(getText(), that.getText()) &&
 				Objects.equals(getLemma(), that.getLemma()) &&
 				Objects.equals(getTag(), that.getTag()) &&
-				Objects.equals(getRelationToParentType(), that.getRelationToParentType()) &&
-				Objects.equals(getPos(), that.getPos()) &&
-				Objects.equals(getHead(), that.getHead());
+		//		Objects.equals(getRelationToParentType(), that.getRelationToParentType()) &&
+				Objects.equals(getPos(), that.getPos());
+		//		Objects.equals(getHead(), that.getHead());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getWordType(), getText(), getLemma(), getTag(), getRelationToParentType(), getPos(), getHead());
+		return Objects.hash(getWordType(), getText(), getLemma(), getTag(),  getPos());
 	}
 
 	public SavedToken(Token originalToken) {
@@ -120,8 +120,8 @@ public class SavedToken {
 		setLemma(originalToken.getLemma());
 		setTag(originalToken.getTag());
 		setWordType(wordType);
-		setHead(originalToken.getHead());
-		setRelationToParentType(originalToken.getRelationToParentType());
+	//	setHead(originalToken.getHead());
+	//	setRelationToParentType(originalToken.getRelationToParentType());
 		setPos(originalToken.getPos());
 
 
@@ -133,8 +133,8 @@ public class SavedToken {
 		setLemma(originalToken.getLemma());
 		setTag(originalToken.getTag());
 		setWordType(originalToken.getWordType());
-		setHead(originalToken.getHead());
-		setRelationToParentType(originalToken.getRelationToParentType());
+	//	setHead(originalToken.getHead());
+	//	setRelationToParentType(originalToken.getRelationToParentType());
 		setPos(originalToken.getPos());
 
 
@@ -144,11 +144,11 @@ public class SavedToken {
 	public boolean equalsToken(Token token) {
 
 		return	Objects.equals(getText(), token.getText()) &&
-				Objects.equals(getLemma(), token.getLemma()) &&
-				Objects.equals(getTag(), token.getTag()) &&
-				Objects.equals(getRelationToParentType(), token.getRelationToParentType()) &&
-				Objects.equals(getPos(), token.getPos()) &&
-				Objects.equals(getHead(), token.getHead());
+				Objects.equals(getLemma(), token.getLemma());
+			//	Objects.equals(getTag(), token.getTag()) &&
+			//	Objects.equals(getRelationToParentType(), token.getRelationToParentType()) &&
+			//	Objects.equals(getPos(), token.getPos());
+			//	Objects.equals(getHead(), token.getHead());
 	}
 
 }
