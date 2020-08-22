@@ -80,10 +80,10 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 
 		
 		String response= getProxiedResponse(url);
-
-		List<IngredientLearningCase> ingredientLearningCases = parseResponseIntoIngredientCases(response);
-		retValue.addAll(ingredientLearningCases);
-
+		if(response!=null||!response.isEmpty()) {
+			List<IngredientLearningCase> ingredientLearningCases = parseResponseIntoIngredientCases(response);
+			retValue.addAll(ingredientLearningCases);
+		}
 		return  retValue;
 
 	}

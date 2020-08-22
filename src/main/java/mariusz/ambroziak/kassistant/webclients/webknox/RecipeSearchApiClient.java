@@ -53,8 +53,16 @@ public class RecipeSearchApiClient extends RapidApiClient {
 			String baseUrl = RecipeDetailsApiClient.baseUrl;
 			String url=baseUrl.replaceAll("__id__",id.toString());
 			List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
-			Iterable<IngredientLearningCase> ingredientLearningCases = ingredientPhraseLearningCaseRepository.saveAll(ingredientCasesForRecipe);
-			retValue.addAll(ingredientCasesForRecipe);
+
+			List<IngredientLearningCase> toSave=new ArrayList<>();
+			ingredientCasesForRecipe.forEach(ilc-> {
+				if(ilc.getOriginalPhrase().toLowerCase().indexOf(phrase.toLowerCase())>0)
+					toSave.add(ilc);
+
+				});
+			Iterable<IngredientLearningCase> ingredientLearningCases = ingredientPhraseLearningCaseRepository.saveAll(toSave);
+
+			retValue.addAll(toSave);
 		}
 
 		return retValue;
@@ -89,6 +97,10 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
 		queryParams.add("query", phrase);
+		queryParams.add("number", "70");
+
+
+
 
 		WebResource clientWithParams = client.queryParams(queryParams);
 		Builder clientWithParamsAndHeader = clientWithParams.header(header1Name, header1Value).header(header2Name, header2Value);
