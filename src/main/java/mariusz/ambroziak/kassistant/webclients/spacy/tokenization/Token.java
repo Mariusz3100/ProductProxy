@@ -44,6 +44,17 @@ public class Token {
 				return this.getText().equals(((Token)obj).getText());
 		}
 	}
+
+	public boolean lemmaEquals(Object obj) {
+		if(!(obj instanceof Token))
+			return false;
+		else {
+			if(this.text==null&&((Token)obj).getText()!=null)
+				return false;
+			else
+				return this.getLemma().equals(((Token)obj).getLemma());
+		}
+	}
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub

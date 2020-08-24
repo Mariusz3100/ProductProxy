@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public enum PhraseEqualityTypes {
 	notEqual("notEqual",-1),
-	equal("equal",1),
-	lemmasEqual("lemmasEqual",2),
-	orderReversed("orderReversed",3),
-	differentTypes("differentTypes",4);
+	equal("equal",10),
+	lemmasEqual("lemmasEqual",9),
+	orderReversed("orderReversed",8),
+	differentTypes("differentTypes",7);
 
 	public String getName() {
 		return name;

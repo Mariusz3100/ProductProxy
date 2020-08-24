@@ -80,5 +80,10 @@ public class DependencyPhraseConsidered extends  PhraseConsidered{
 
     }
 
+    @Override
+    public String toString(){
+        return "["+getHead().getText()+"]("+getChild().getText()+")";
+    }
+
 }
 

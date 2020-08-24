@@ -35,4 +35,9 @@ public class AdjacencyPhraseConsidered extends  PhraseConsidered{
 
     }
 
+    @Override
+    public String toString(){
+        return getPhrase();
+    }
+
 }

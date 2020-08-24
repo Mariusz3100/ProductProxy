@@ -151,4 +151,10 @@ public class SavedToken {
 			//	Objects.equals(getHead(), token.getHead());
 	}
 
+	public boolean lemmasEqual(Token token) {
+
+		return	Objects.equals(getLemma(), token.getLemma());
+
+	}
+
 }
