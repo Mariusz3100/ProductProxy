@@ -18,7 +18,7 @@ public abstract class PhraseConsidered {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pc_id;
 
-
+    private boolean accepted=false;
 
 
 
@@ -57,8 +57,13 @@ public abstract class PhraseConsidered {
         this.pc_id = pc_id;
     }
 
+    public boolean isAccepted() {
+        return accepted;
+    }
 
-
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
 
     @Override
     public int hashCode() {

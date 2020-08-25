@@ -7,8 +7,9 @@ public enum PhraseEqualityTypes {
 	notEqual("notEqual",-1),
 	equal("equal",10),
 	lemmasEqual("lemmasEqual",9),
-	orderReversed("orderReversed",8),
-	differentTypes("differentTypes",7);
+	dependencyEquals("dependencyEquals",8),
+	orderReversed("orderReversed",7),
+	differentTypes("differentTypes",6);
 
 	public String getName() {
 		return name;
