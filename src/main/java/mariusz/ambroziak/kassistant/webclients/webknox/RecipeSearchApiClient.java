@@ -97,7 +97,7 @@ public class RecipeSearchApiClient extends RapidApiClient {
 
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
 		queryParams.add("query", phrase);
-		queryParams.add("number", "70");
+		queryParams.add("number", "90");
 
 
 

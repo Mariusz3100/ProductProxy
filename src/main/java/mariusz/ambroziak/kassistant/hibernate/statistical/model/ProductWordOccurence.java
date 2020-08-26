@@ -16,9 +16,9 @@ public class ProductWordOccurence {
     private Word word;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     ProductParsingResult productParsingResult;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     IngredientPhraseParsingResult ingredientPhraseParsingResult;
 
     public Long getPwo_id() {
