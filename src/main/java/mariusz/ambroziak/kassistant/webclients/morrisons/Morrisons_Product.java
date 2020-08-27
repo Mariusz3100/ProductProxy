@@ -11,8 +11,7 @@ import javax.persistence.Entity;
 public class Morrisons_Product extends ProductData{
 
 
-	@Column(length = 501)
-	private String departmentList;
+
 	@Column(length = 200)
 	private String sku;
 	@Column(length = 1000)
@@ -23,13 +22,7 @@ public class Morrisons_Product extends ProductData{
 	@Column(length = 2111)
 	private String prepAndUsage;
 
-	public String getDepartmentList() {
-		return departmentList;
-	}
 
-	public void setDepartmentList(String departmentList) {
-		this.departmentList = departmentList;
-	}
 
 	public String getSku() {
 		return sku;
@@ -76,7 +69,7 @@ public class Morrisons_Product extends ProductData{
 
 	public Morrisons_Product(String name, String detailsUrl, String description, String department, String departmentList, String sku, String ingredients) {
 		super(name, detailsUrl, description, department);
-		this.departmentList = departmentList;
+		this.setDepartmentList(departmentList);
 		this.sku = sku;
 		this.ingredients = ingredients;
 	}

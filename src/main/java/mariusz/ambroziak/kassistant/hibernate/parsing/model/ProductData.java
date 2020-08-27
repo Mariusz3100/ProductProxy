@@ -21,8 +21,11 @@ public abstract class ProductData {
     protected String description;
     @Column(length = 500)
     protected String department;
+    @Column(length = 501)
+    private String departmentList;
     @Column(length = 500)
     protected String brand;
+
 
     @Transient
     protected PreciseQuantity quantity;
@@ -30,7 +33,13 @@ public abstract class ProductData {
     protected PreciseQuantity totalQuantity;
 
 
+    public String getDepartmentList() {
+        return departmentList;
+    }
 
+    public void setDepartmentList(String departmentList) {
+        this.departmentList = departmentList;
+    }
     public PreciseQuantity getQuantity() {
         return quantity;
     }

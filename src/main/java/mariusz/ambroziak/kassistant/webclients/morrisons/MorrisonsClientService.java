@@ -211,7 +211,7 @@ public class MorrisonsClientService {
         String brand = product.getJSONObject("brand").getString("name");
 
         String categoryList = product.getString("mainCategory");
-        String[] split = categoryList.split("/");
+        String[] split = categoryList.split(MetadataConstants.departmentListSeparator);
         String lastCategory=split[split.length-1];
 
         JSONObject backOfPack = root.getJSONObject("backOfPack");

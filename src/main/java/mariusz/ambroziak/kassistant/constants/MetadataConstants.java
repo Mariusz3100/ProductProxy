@@ -44,6 +44,7 @@ public class MetadataConstants {
 	
 	
 	public static final String stringListSeparator="\n";
+	public static final String departmentListSeparator="/";
 	public static final String conditionProduktNameMapKey="conditionMapProductName";
 
 	
