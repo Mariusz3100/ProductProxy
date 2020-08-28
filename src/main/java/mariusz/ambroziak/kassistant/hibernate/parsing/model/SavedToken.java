@@ -2,10 +2,13 @@ package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import mariusz.ambroziak.kassistant.enums.WordType;
+import mariusz.ambroziak.kassistant.hibernate.statistical.model.ProductWordOccurence;
 import mariusz.ambroziak.kassistant.pojos.QualifiedToken;
 import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,9 +26,9 @@ public class SavedToken {
 	private String text;
 	private String lemma;
 	private String tag;
-//	private String relationToParentType;
 	private String pos;
-	//private String head;
+
+
 
 
 	public int getToken_id() {
@@ -68,13 +71,6 @@ public class SavedToken {
 		this.tag = tag;
 	}
 
-//	public String getRelationToParentType() {
-//		return relationToParentType;
-//	}
-//
-//	public void setRelationToParentType(String relationToParentType) {
-//		this.relationToParentType = relationToParentType;
-//	}
 
 	public String getPos() {
 		return pos;
@@ -84,13 +80,7 @@ public class SavedToken {
 		this.pos = pos;
 	}
 
-//	public String getHead() {
-//		return head;
-//	}
 
-//	public void setHead(String head) {
-//		this.head = head;
-//	}
 
 	public SavedToken() {
 	}
@@ -156,5 +146,6 @@ public class SavedToken {
 		return	Objects.equals(getLemma(), token.getLemma());
 
 	}
+
 
 }

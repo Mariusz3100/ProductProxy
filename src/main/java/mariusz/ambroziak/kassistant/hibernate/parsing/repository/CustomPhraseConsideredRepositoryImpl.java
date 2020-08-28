@@ -1,12 +1,13 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.repository;
 
+import mariusz.ambroziak.kassistant.enums.PhraseSourceType;
 import mariusz.ambroziak.kassistant.hibernate.parsing.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -21,6 +22,18 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
     @Autowired
     @Lazy
     PhraseConsideredRepository phraseConsideredRepository;
+    @Autowired
+    @Lazy
+    AdjacencyPhraseConsideredRepository adjacencyPhraseConsideredRepository;
+
+    @Autowired
+    @Lazy
+    DependencyPhraseConsideredRepository dependencyPhraseConsideredRepository;
+    @Autowired
+    @Lazy
+    SavedTokenRepository savedTokenRepository;
+
+
 
 
     @Override
@@ -63,10 +76,16 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
 
     @Override
     public void save(PhraseConsidered st) {
+        if(st.getSource()==null)
+        {
+            if(st.getIngredientPhraseParsingResult()!=null)st.setSource(PhraseSourceType.Ingredient);
+            if(st.getProductParsingResult()!=null)st.setSource(PhraseSourceType.Product);
+        }
+
         if(st instanceof AdjacencyPhraseConsidered){
-            save((AdjacencyPhraseConsidered)st);
+            saveIfNew((AdjacencyPhraseConsidered)st);
         }else if(st instanceof DependencyPhraseConsidered){
-            save((DependencyPhraseConsidered)st);
+            saveIfNew((DependencyPhraseConsidered)st);
 
         }
 
@@ -76,12 +95,44 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
         this.phraseConsideredRepository.save(st);
     }
 
+    public void saveIfNew(AdjacencyPhraseConsidered st) {
+        List<AdjacencyPhraseConsidered> byPhraseFiltered =
+                this.adjacencyPhraseConsideredRepository
+                        .findByPhrase(st.getPhrase())
+                        .stream()
+                        .filter(adjacencyPhraseConsidered -> Objects.equals(adjacencyPhraseConsidered.getSource(),st.getSource()))
+                        .collect(Collectors.toList());
 
-    public void save(DependencyPhraseConsidered st) {
+        if(byPhraseFiltered.isEmpty()){
+            this.phraseConsideredRepository.save(st);
+        }else if(byPhraseFiltered.size()>1){
+            System.err.println("Two AdjacencyPhraseConsidered with same phrase: "+st.getPhrase()+", check constraints.");
+        }
+
+
+    }
+
+
+    public void saveIfNew(DependencyPhraseConsidered st) {
         st.setChild(saveIfNew(st.getChild()));
         st.setHead(saveIfNew(st.getHead()));
 
-        phraseConsideredRepository.save(st);
+
+        List<DependencyPhraseConsidered> byHeadAndChild = dependencyPhraseConsideredRepository.findByHeadAndChild(st.getHead(), st.getChild());
+
+        boolean exists = byHeadAndChild.stream()
+                .filter(dependencyPhraseConsidered -> Objects.equals(dependencyPhraseConsidered.getSource(), st.getSource()))
+                .count() > 0;
+
+        if(!exists){
+              phraseConsideredRepository.save(st);
+        }
+
+
+
+
+
+
 
     }
 
@@ -99,6 +150,34 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
     @Override
     public Iterable<PhraseConsidered> findAllPhrases() {
         return this.phraseConsideredRepository.findAll();
+    }
+
+    @Override
+    public Iterable<PhraseConsidered> findPhrasesCompatible(String word) {
+        List<AdjacencyPhraseConsidered> byPhraseContaining = this.adjacencyPhraseConsideredRepository.findByPhraseContainingAndAcceptedTrue(word);
+
+        List<SavedToken> byText = savedTokenRepository.findByText(word);
+        byText.addAll(savedTokenRepository.findByLemma(word));
+
+
+        Set<SavedToken> setOfTokens = byText.stream().collect(Collectors.toSet());
+
+        Set<DependencyPhraseConsidered> byTokens=new HashSet<>();
+
+        setOfTokens.forEach(savedToken ->
+        {
+            byTokens.addAll(this.dependencyPhraseConsideredRepository.findByHeadAndAcceptedTrueOrChildAndAcceptedTrue(savedToken,savedToken));
+
+        });
+
+        List<PhraseConsidered> retValue=new ArrayList<>();
+
+        retValue.addAll(byPhraseContaining);
+        retValue.addAll(byTokens.stream().collect(Collectors.toSet()));
+
+        return retValue;
+
+
     }
 
 

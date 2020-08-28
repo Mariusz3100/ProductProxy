@@ -1,6 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import mariusz.ambroziak.kassistant.enums.PhraseSourceType;
 import mariusz.ambroziak.kassistant.pojos.QualifiedToken;
 import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
 import org.hibernate.validator.constraints.CompositionType;
@@ -20,7 +21,9 @@ public abstract class PhraseConsidered {
 
     private boolean accepted=false;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PhraseSourceType source;
 
 
     @OneToOne
@@ -39,6 +42,9 @@ public abstract class PhraseConsidered {
 
     public void setProductParsingResult(ProductParsingResult productParsingResult) {
         this.productParsingResult = productParsingResult;
+
+        if(productParsingResult!=null)
+            setSource(PhraseSourceType.Product);
     }
 
     public IngredientPhraseParsingResult getIngredientPhraseParsingResult() {
@@ -47,6 +53,9 @@ public abstract class PhraseConsidered {
 
     public void setIngredientPhraseParsingResult(IngredientPhraseParsingResult ingredientPhraseParsingResult) {
         this.ingredientPhraseParsingResult = ingredientPhraseParsingResult;
+
+        if(ingredientPhraseParsingResult!=null)
+            setSource(PhraseSourceType.Ingredient);
     }
 
     public int getPc_id() {
@@ -63,6 +72,14 @@ public abstract class PhraseConsidered {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+    }
+
+    public PhraseSourceType getSource() {
+        return source;
+    }
+
+    public void setSource(PhraseSourceType source) {
+        this.source = source;
     }
 
     @Override

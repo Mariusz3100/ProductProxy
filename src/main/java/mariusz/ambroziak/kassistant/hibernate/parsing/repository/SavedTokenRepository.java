@@ -16,6 +16,7 @@ public interface SavedTokenRepository extends CrudRepository<SavedToken,Long> {
 
     SavedToken findById(long id);
     List<SavedToken> findByText(String text);
+    List<SavedToken> findByLemma(String text);
 
 
 }

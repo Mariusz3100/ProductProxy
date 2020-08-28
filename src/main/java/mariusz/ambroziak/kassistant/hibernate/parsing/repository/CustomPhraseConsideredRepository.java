@@ -19,4 +19,9 @@ public interface CustomPhraseConsideredRepository {
 
 
     Iterable<PhraseConsidered> findAllPhrases();
+
+    Iterable<PhraseConsidered> findPhrasesCompatible(String word);
+
+
+
 }
