@@ -80,6 +80,23 @@ public class DependencyPhraseConsidered extends  PhraseConsidered{
 
     }
 
+    public boolean checkCompatibility(String text1,String text2){
+       return  isChildTextOrLemmaEqualTo(text1)||isHeadTextOrLemmaEqualTo(text2)
+               ||isChildTextOrLemmaEqualTo(text2)||isHeadTextOrLemmaEqualTo(text1);
+
+    }
+
+
+    public boolean isHeadTextOrLemmaEqualTo(String text){
+        return getHead().getText().equals(text)||getHead().getLemma().equals(text);
+
+    }
+
+    public boolean isChildTextOrLemmaEqualTo(String text){
+        return getChild().getText().equals(text)||getChild().getLemma().equals(text);
+
+    }
+
     @Override
     public String toString(){
         return "["+getHead().getText()+"]("+getChild().getText()+")";

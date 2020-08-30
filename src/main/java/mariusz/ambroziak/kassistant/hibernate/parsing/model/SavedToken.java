@@ -146,6 +146,21 @@ public class SavedToken {
 		return	Objects.equals(getLemma(), token.getLemma());
 
 	}
+	public boolean equalsToken(SavedToken token) {
+
+		return	Objects.equals(getText(), token.getText()) &&
+				Objects.equals(getLemma(), token.getLemma());
+		//	Objects.equals(getTag(), token.getTag()) &&
+		//	Objects.equals(getRelationToParentType(), token.getRelationToParentType()) &&
+		//	Objects.equals(getPos(), token.getPos());
+		//	Objects.equals(getHead(), token.getHead());
+	}
+
+	public boolean lemmasEqual(SavedToken token) {
+
+		return	Objects.equals(getLemma(), token.getLemma());
+
+	}
 
 
 }

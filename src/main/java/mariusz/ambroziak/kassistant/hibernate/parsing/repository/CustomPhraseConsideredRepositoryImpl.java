@@ -155,7 +155,20 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
     @Override
     public Iterable<PhraseConsidered> findPhrasesCompatible(String word) {
         List<AdjacencyPhraseConsidered> byPhraseContaining = this.adjacencyPhraseConsideredRepository.findByPhraseContainingAndAcceptedTrue(word);
+        List<PhraseConsidered> retValue=new ArrayList<>();
 
+        List<DependencyPhraseConsidered> dependencyPhrasesCompatible = findDependencyPhrasesCompatible(word);
+
+        retValue.addAll(byPhraseContaining);
+        retValue.addAll(dependencyPhrasesCompatible);
+
+        return retValue;
+
+
+    }
+
+    @Override
+    public List<DependencyPhraseConsidered> findDependencyPhrasesCompatible(String word) {
         List<SavedToken> byText = savedTokenRepository.findByText(word);
         byText.addAll(savedTokenRepository.findByLemma(word));
 
@@ -170,9 +183,8 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
 
         });
 
-        List<PhraseConsidered> retValue=new ArrayList<>();
+        List<DependencyPhraseConsidered> retValue=new ArrayList<>();
 
-        retValue.addAll(byPhraseContaining);
         retValue.addAll(byTokens.stream().collect(Collectors.toSet()));
 
         return retValue;
@@ -180,5 +192,33 @@ public class CustomPhraseConsideredRepositoryImpl implements CustomPhraseConside
 
     }
 
+
+    @Override
+    public Set<DependencyPhraseConsidered> findDependencyPhrasesCompatible(String word1,String word2) {
+        List<SavedToken> tokens1 = savedTokenRepository.findByText(word1);
+        tokens1.addAll(savedTokenRepository.findByLemma(word1));
+        //we search by first word, then check found results with second
+        Set<SavedToken> setOfTokens1 = tokens1.stream().collect(Collectors.toSet());
+
+        Set<DependencyPhraseConsidered> results=new HashSet<>();
+
+        setOfTokens1.forEach(token1 ->
+        {
+            List<DependencyPhraseConsidered> found =
+                    this.dependencyPhraseConsideredRepository.findByHeadAndAcceptedTrueOrChildAndAcceptedTrue(token1,token1);
+            found.stream().forEach(depPh -> {
+                    if(depPh.isHeadTextOrLemmaEqualTo(word1)&&depPh.isChildTextOrLemmaEqualTo(word2)
+                    ||depPh.isHeadTextOrLemmaEqualTo(word2)&&depPh.isChildTextOrLemmaEqualTo(word1)){
+                        results.add(depPh);
+                    }
+            });
+
+
+
+        });
+
+        return results;
+
+    }
 
 }
