@@ -1,9 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.statistical.repository;
 
 import mariusz.ambroziak.kassistant.hibernate.parsing.model.*;
-import mariusz.ambroziak.kassistant.hibernate.statistical.model.IngredientWordOccurence;
-import mariusz.ambroziak.kassistant.hibernate.statistical.model.ProductWordOccurence;
-import mariusz.ambroziak.kassistant.hibernate.statistical.model.Word;
+import mariusz.ambroziak.kassistant.hibernate.statistical.model.*;
 import mariusz.ambroziak.kassistant.webclients.spacy.tokenization.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +22,16 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
     IngredientWordOccurenceRepository ingredientWordOccurenceRepository;
     @Autowired
     ProductWordOccurenceRepository productWordOccurenceRepository;
+
+    @Autowired
+    IgnoredIngredientWordOccurenceRepository ignoredIngredientWordOccurenceRepository;
+
+    @Autowired
+    IgnoredProductWordOccurenceRepository ignoredProductWordOccurenceRepository;
+
+
+
+
     @Override
     public Word getOrSave(String text, String lemma) {
 
@@ -94,6 +102,8 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
     }
 
 
+
+
     public void saveProductStatsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult) {
         if(productParsingResult==null||productParsingResult.getOriginalName()==null)
             System.err.println("null ingredientPhraseParsingResult for stats provided");
@@ -107,6 +117,50 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
 
                 ProductWordOccurence productWordOccurence=new ProductWordOccurence(savedWord,productParsingResult);
                 this.productWordOccurenceRepository.save(productWordOccurence);
+            }catch (Exception e){
+                e.printStackTrace();
+
+            }
+
+        }
+    }
+
+    @Override
+    public void saveProductIgnoredWordsData(List<? extends Token> wordsToSave, ProductParsingResult productParsingResult) {
+        if(productParsingResult==null||productParsingResult.getOriginalName()==null)
+            System.err.println("null ingredientPhraseParsingResult for stats provided");
+
+        if(wordsToSave==null||wordsToSave.isEmpty())
+            System.err.println("Empty word list for stats provided for phrase: "+productParsingResult.getOriginalName());
+
+        for(Token token:wordsToSave){
+            try{
+                Word savedWord=this.getOrSave(token);
+
+                IgnoredProductWordOccurence productWordOccurence=new IgnoredProductWordOccurence(savedWord,productParsingResult);
+                this.ignoredProductWordOccurenceRepository.save(productWordOccurence);
+            }catch (Exception e){
+                e.printStackTrace();
+
+            }
+
+        }
+    }
+
+    @Override
+    public void saveIngredientIgnoredWordsData(List<? extends Token> wordsToSave, IngredientPhraseParsingResult ingredientPhraseParsingResult) {
+        if(ingredientPhraseParsingResult==null||ingredientPhraseParsingResult.getOriginalName()==null)
+            System.err.println("null ingredientPhraseParsingResult for stats provided");
+
+        if(wordsToSave==null||wordsToSave.isEmpty())
+            System.err.println("Empty word list for stats provided for phrase: "+ingredientPhraseParsingResult.getOriginalName());
+
+        for(Token token:wordsToSave){
+            try{
+                Word savedWord=this.getOrSave(token);
+
+                IgnoredIngredientWordOccurence productWordOccurence=new IgnoredIngredientWordOccurence(savedWord,ingredientPhraseParsingResult);
+                this.ignoredIngredientWordOccurenceRepository.save(productWordOccurence);
             }catch (Exception e){
                 e.printStackTrace();
 

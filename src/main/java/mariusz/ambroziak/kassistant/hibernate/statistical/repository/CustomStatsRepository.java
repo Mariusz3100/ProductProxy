@@ -13,8 +13,10 @@ public interface CustomStatsRepository {
     public Word getOrSave(Token token);
 
     public void saveIngredientStatsData(List<? extends Token> wordsToSave,IngredientPhraseParsingResult ingredientPhraseParsingResult);
+    public void saveIngredientIgnoredWordsData(List<? extends Token> wordsToSave,IngredientPhraseParsingResult productParsingResult);
 
     public void saveProductStatsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult);
+    public void saveProductIgnoredWordsData(List<? extends Token> wordsToSave,ProductParsingResult productParsingResult);
 
 
 }

@@ -10,7 +10,8 @@ public enum ProductType{
 	juice("juice"),
 	flavoured("flavoured"),
 	unknown("unknown"),
-	meal("meal");
+	meal("meal"),
+	notFood("notFood");
 
 	private String name;
 
