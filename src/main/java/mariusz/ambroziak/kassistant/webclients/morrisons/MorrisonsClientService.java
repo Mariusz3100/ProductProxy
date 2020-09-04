@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -185,7 +186,7 @@ public class MorrisonsClientService {
                 retValue.add(productForUrl);
             }
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -243,6 +244,10 @@ public class MorrisonsClientService {
             for(int i=0;i<json.length();i++){
                 if("Preparation and Usage".equals(json.getJSONObject(i).getString("title")))
                     prepAndUsage+=json.getJSONObject(i).getString("content")+ MetadataConstants.stringListSeparator;
+
+                if(prepAndUsage.length()>2110){
+                    prepAndUsage=prepAndUsage.substring(0,2110);
+                }
             }
 
         }

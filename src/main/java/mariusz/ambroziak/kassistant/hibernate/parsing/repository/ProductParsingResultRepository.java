@@ -8,4 +8,6 @@ import java.util.List;
 public interface ProductParsingResultRepository  extends CrudRepository<ProductParsingResult,Long> {
 
     List<ProductParsingResult> findByOriginalName(String originalName);
+    List<ProductParsingResult> findByMinimalResultsCalculatedContaining(String originalName);
+
 }

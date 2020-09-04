@@ -11,6 +11,7 @@ public enum ProductType{
 	flavoured("flavoured"),
 	unknown("unknown"),
 	meal("meal"),
+	dried("dried"),
 	notFood("notFood");
 
 	private String name;
