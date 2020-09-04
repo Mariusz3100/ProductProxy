@@ -44,6 +44,16 @@ public class RecipeSearchApiClient extends RapidApiClient {
 	RecipeDetailsApiClient recipeDetailsApiClient;
 
 
+	public List<IngredientLearningCase> getAndSaveIngredientsForRecipe(String recipeId){
+		String baseUrl = RecipeDetailsApiClient.baseUrl;
+		String url=baseUrl.replaceAll("__id__",recipeId);
+		List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
+
+		ingredientPhraseLearningCaseRepository.saveAll(ingredientCasesForRecipe);
+
+
+		return ingredientCasesForRecipe;
+	}
 
 
 	public List<IngredientLearningCase> getandSaveIngredientsFor(String phrase){
