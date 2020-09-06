@@ -154,11 +154,11 @@ public class PhraseFound {
     }
 
 
-    public ProductType getWeightedLeadingProductType(){
-        Set<PhraseFoundProductType> phraseFoundProductType = getTypesFoundForPhraseAndBase();
-
-//        Map<ProductType, Long> occurenceMap = phraseFoundProductType
-//                .stream().filter(p->p.getProductType()!=ProductType.unknown).distinct().collect(() -> );
+    public  ProductType getWeightedLeadingProductType() {
+        ProductType weightedLeadingProductType = this.getWeightedLeadingProductType(getTypesFoundForPhraseAndBase());
+        return weightedLeadingProductType;
+    }
+    public static ProductType getWeightedLeadingProductType(Set<PhraseFoundProductType> phraseFoundProductType){
 
         Map<ProductType,Float> occurenceMap= new HashMap<>();
 
