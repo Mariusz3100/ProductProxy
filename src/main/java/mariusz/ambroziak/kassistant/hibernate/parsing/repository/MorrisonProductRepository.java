@@ -6,7 +6,7 @@ import java.util.List;
 
 
 public interface MorrisonProductRepository extends ProductRepository<Morrisons_Product> {
-    List<Morrisons_Product> findByNameContaining(String phrase);
+    List<Morrisons_Product> findByNameContainingIgnoreCase(String phrase);
 
 
 }

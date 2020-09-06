@@ -144,7 +144,7 @@ public class MorrisonsClientService {
     public List<Morrisons_Product> searchInDbAndApiFor(String phrase){
         String[] phraseSplit=phrase.split(" ");
         List<Morrisons_Product> retValue=new ArrayList<>();
-        Arrays.asList(phraseSplit).forEach(s->retValue.addAll(this.morrisonProductRepository.findByNameContaining(s)));
+        Arrays.asList(phraseSplit).forEach(s->retValue.addAll(this.morrisonProductRepository.findByNameContainingIgnoreCase(s)));
 
         if(retValue.isEmpty()){
             retValue.addAll(this.searchInApiFor(phrase));
