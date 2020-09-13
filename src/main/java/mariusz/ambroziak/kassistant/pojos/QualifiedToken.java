@@ -87,7 +87,7 @@ public class QualifiedToken extends Token {
 	}
 
 	public boolean compareWithToken(Token token) {
-		return this.getText().equals(token.getText())||this.getLemma().equals(token.getLemma());
+		return this.getText().toLowerCase().equals(token.getText().toLowerCase())||this.getLemma().toLowerCase().equals(token.getLemma().toLowerCase());
 	}
 
 	public static QualifiedToken createMerged(String fused,WordType type) {
