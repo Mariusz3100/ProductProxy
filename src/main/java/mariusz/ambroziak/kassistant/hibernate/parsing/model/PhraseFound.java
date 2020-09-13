@@ -1,6 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 
+import mariusz.ambroziak.kassistant.enums.PhraseFoundDataSource;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.enums.WordType;
 
@@ -22,6 +23,9 @@ public class PhraseFound {
     @Column(length = 2000)
 
     private String phrase;
+
+    @Enumerated(EnumType.STRING)
+    private PhraseFoundDataSource source;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 100)
@@ -59,6 +63,13 @@ public class PhraseFound {
         this.phrase = phrase;
     }
 
+    public PhraseFoundDataSource getSource() {
+        return source;
+    }
+
+    public void setSource(PhraseFoundDataSource source) {
+        this.source = source;
+    }
 
     public IngredientPhraseParsingResult getRelatedIngredientResult() {
         return relatedIngredientResult;
@@ -168,12 +179,16 @@ public class PhraseFound {
             }
 
             String original="";
-
+            long ingredientPhrasesCount = phraseFoundProductType.stream().filter(phraseFoundProductType1 -> phraseFoundProductType1.getRelatedIngredientResult() != null).count();
+            long productPhrasesCount = phraseFoundProductType.stream().filter(phraseFoundProductType1 -> phraseFoundProductType1.getRelatedProductResult() != null).count();
+            float phraseTypeCoeficient=0;
             if(pfpt.getRelatedIngredientResult()!=null){
-                original=pfpt.getRelatedIngredientResult().getOriginalName();
+                original= pfpt.getRelatedIngredientResult().getOriginalName();
+                phraseTypeCoeficient=(float)ingredientPhrasesCount/(ingredientPhrasesCount+productPhrasesCount);
             }
             if(pfpt.getRelatedProductResult()!=null){
                 original=pfpt.getRelatedProductResult().getOriginalName();
+                phraseTypeCoeficient=(float)productPhrasesCount/(ingredientPhrasesCount+productPhrasesCount);
             }
 
             float calculatedWeight=1;
@@ -181,7 +196,7 @@ public class PhraseFound {
                 int length = original.split(" ").length;
 
                 calculatedWeight=fullWeight/length;
-
+                calculatedWeight*=phraseTypeCoeficient;
             }else{
                 calculatedWeight=1;
             }
@@ -206,19 +221,22 @@ public class PhraseFound {
     }
 
 
-    public PhraseFound(String phrase, WordType type, String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult) {
+    public PhraseFound(String phrase, WordType type, String reasoning, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult,PhraseFoundDataSource phraseFoundDataSource) {
         this.phrase = phrase;
         this.wordType = type;
         this.relatedIngredientResult = relatedIngredientResult;
         this.relatedProductResult = relatedProductResult;
         this.reasoning = reasoning;
+        this.source=phraseFoundDataSource;
+
     }
 
 
-    public PhraseFound(String phrase, WordType type, String reasoning) {
+    public PhraseFound(String phrase, WordType type, String reasoning,PhraseFoundDataSource phraseFoundDataSource) {
         this.phrase = phrase;
         this.wordType = type;
         this.reasoning = reasoning;
+        this.source=phraseFoundDataSource;
     }
 
     public PhraseFound() {

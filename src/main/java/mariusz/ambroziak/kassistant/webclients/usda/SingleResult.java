@@ -1,5 +1,7 @@
 package mariusz.ambroziak.kassistant.webclients.usda;
 
+import mariusz.ambroziak.kassistant.enums.PhraseFoundDataSource;
+
 public class SingleResult {
     private int fdcId;
     private String description;
@@ -37,5 +39,28 @@ public class SingleResult {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
+    }
+
+
+    public PhraseFoundDataSource calculateType(){
+        if(dataType.equalsIgnoreCase("SR Legacy")){
+            return PhraseFoundDataSource.Usda_Legacy;
+        }
+
+        if(dataType.equalsIgnoreCase("Survey (FNDDS)")){
+            return PhraseFoundDataSource.Usda_Survey;
+        }
+
+
+        if(dataType.equalsIgnoreCase("Foundation")){
+            return PhraseFoundDataSource.Usda_Foundation;
+        }
+
+
+        if(dataType.equalsIgnoreCase("Branded")){
+            return PhraseFoundDataSource.Usda_Branded;
+        }
+
+        return null;
     }
 }
