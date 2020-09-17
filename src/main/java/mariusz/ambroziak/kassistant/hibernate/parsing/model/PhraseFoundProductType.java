@@ -1,6 +1,7 @@
 package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 
+import mariusz.ambroziak.kassistant.enums.PhraseFoundDataSource;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 
 import javax.persistence.*;
@@ -26,6 +27,11 @@ public class PhraseFoundProductType {
     @ManyToOne(cascade = CascadeType.ALL)
     private ProductParsingResult relatedProductResult;
 
+
+    private String keyword;
+
+    @Enumerated(EnumType.STRING)
+    private PhraseFoundDataSource apiSource;
 
     @ManyToOne
     private PhraseFound basePhrase;
@@ -85,7 +91,21 @@ public class PhraseFoundProductType {
         this.count++;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
 
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public PhraseFoundDataSource getApiSource() {
+        return apiSource;
+    }
+
+    public void setApiSource(PhraseFoundDataSource apiSource) {
+        this.apiSource = apiSource;
+    }
 
     public PhraseFoundProductType(ProductType productType, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult, PhraseFound basePhrase) {
         this.productType = productType;
