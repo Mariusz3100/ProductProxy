@@ -2,6 +2,7 @@ package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 
 import mariusz.ambroziak.kassistant.enums.PhraseFoundDataSource;
+import mariusz.ambroziak.kassistant.enums.PhraseFoundProductType_Scope;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 import mariusz.ambroziak.kassistant.enums.WordType;
 
@@ -164,12 +165,34 @@ public class PhraseFound {
 
     }
 
+    public  ProductType getWeightedLeadingProductTypeFromApis() {
+        if(phraseFoundProductType!=null&&!phraseFoundProductType.isEmpty()) {
+            List<PhraseFoundProductType> phraseType = phraseFoundProductType.stream()
+                    .filter(phraseFoundProductType1 -> phraseFoundProductType1.getProductType()!=null&&phraseFoundProductType1.getScope().equals(PhraseFoundProductType_Scope.Phrase))
+                    .collect(Collectors.toList());
 
-    public  ProductType getWeightedLeadingProductType() {
-        ProductType weightedLeadingProductType = this.getWeightedLeadingProductType(getTypesFoundForPhraseAndBase());
+            if (phraseType.stream().map(phraseFoundProductType1 -> phraseFoundProductType1.getProductType()).distinct().count() > 1) {
+                System.err.println("Conflicting api productTypes found in db for phraseFound: " + getPf_id());
+            } else {
+                if (!phraseType.isEmpty()) {
+                    return phraseType.get(0).getProductType();
+                }
+            }
+        }
+        return ProductType.unknown;
+
+    }
+    public  ProductType getWeightedLeadingProductTypeFromResults() {
+        ProductType weightedLeadingProductType = this.getWeightedLeadingProductTypeFromResults(getTypesFoundForPhraseAndBase());
         return weightedLeadingProductType;
     }
-    public static ProductType getWeightedLeadingProductType(Set<PhraseFoundProductType> phraseFoundProductType){
+
+
+
+
+
+
+        public static ProductType getWeightedLeadingProductTypeFromResults(Set<PhraseFoundProductType> phraseFoundProductType){
 
         Map<ProductType,Float> occurenceMap= new HashMap<>();
 

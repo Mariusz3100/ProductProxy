@@ -2,6 +2,7 @@ package mariusz.ambroziak.kassistant.hibernate.parsing.model;
 
 
 import mariusz.ambroziak.kassistant.enums.PhraseFoundDataSource;
+import mariusz.ambroziak.kassistant.enums.PhraseFoundProductType_Scope;
 import mariusz.ambroziak.kassistant.enums.ProductType;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class PhraseFoundProductType {
     private ProductParsingResult relatedProductResult;
 
 
-    private String keyword;
+    private String keywords;
 
     @Enumerated(EnumType.STRING)
     private PhraseFoundDataSource apiSource;
@@ -38,6 +39,8 @@ public class PhraseFoundProductType {
 
     private int count;
 
+
+    private PhraseFoundProductType_Scope scope;
 
     public Long getPfpt_id() {
         return pfpt_id;
@@ -91,12 +94,15 @@ public class PhraseFoundProductType {
         this.count++;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getKeywords() {
+        return keywords;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setKeywords(String keywords) {
+
+        this.keywords = keywords;
+        this.scope=PhraseFoundProductType_Scope.Phrase;
+
     }
 
     public PhraseFoundDataSource getApiSource() {
@@ -105,6 +111,16 @@ public class PhraseFoundProductType {
 
     public void setApiSource(PhraseFoundDataSource apiSource) {
         this.apiSource = apiSource;
+        this.scope=PhraseFoundProductType_Scope.Phrase;
+
+    }
+
+    public PhraseFoundProductType_Scope getScope() {
+        return scope;
+    }
+
+    public void setScope(PhraseFoundProductType_Scope scope) {
+        this.scope = scope;
     }
 
     public PhraseFoundProductType(ProductType productType, IngredientPhraseParsingResult relatedIngredientResult, ProductParsingResult relatedProductResult, PhraseFound basePhrase) {
@@ -113,6 +129,7 @@ public class PhraseFoundProductType {
         this.relatedProductResult = relatedProductResult;
         this.basePhrase = basePhrase;
         this.count = 1;
+        this.scope=PhraseFoundProductType_Scope.Result;
     }
 
     public PhraseFoundProductType() {
