@@ -4,17 +4,18 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum ProductType{
-	fresh("fresh"),
-	processed("processed"),
-	puree("puree"),
-	juice("juice"),
-	flavoured("flavoured"),
-	unknown("unknown"),
-	meal("meal"),
-	dried("dried"),
-	notFood("notFood");
+	fresh("fresh",0),
+	processed("processed",10),
+	puree("puree",20),
+	juice("juice",30),
+	flavoured("flavoured",90),
+	unknown("unknown",-1),
+	meal("meal",30),
+	dried("dried",30),
+	notFood("notFood",100);
 
 	private String name;
+	private int priority;
 
 	public String getName() {
 		return name;
@@ -24,10 +25,16 @@ public enum ProductType{
 		this.name = name;
 	}
 
+	public int getPriority() {
+		return priority;
+	}
 
-
-	ProductType(String name) {
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	ProductType(String name, int priority) {
 		this.name = name;
+		this.priority = priority;
 	}
 
 	public static ProductType parseType(String phrase){
@@ -39,5 +46,10 @@ public enum ProductType{
 			return first.get();
 		else
 			return ProductType.unknown;
+	}
+
+	@Override
+	public String toString() {
+		return name;
 	}
 }
