@@ -8,6 +8,7 @@ public enum ProductType{
 	processed("processed",10),
 	puree("puree",20),
 	juice("juice",30),
+	compound("compound",50),
 	flavoured("flavoured",90),
 	unknown("unknown",-1),
 	meal("meal",30),
