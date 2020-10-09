@@ -44,6 +44,9 @@ public class Token {
 				return this.getText().equals(((Token)obj).getText());
 		}
 	}
+	public boolean compareWithToken(Token token) {
+		return this.getText().toLowerCase().equals(token.getText().toLowerCase())||this.getLemma().toLowerCase().equals(token.getLemma().toLowerCase());
+	}
 
 	public boolean lemmaEquals(Object obj) {
 		if(!(obj instanceof Token))
