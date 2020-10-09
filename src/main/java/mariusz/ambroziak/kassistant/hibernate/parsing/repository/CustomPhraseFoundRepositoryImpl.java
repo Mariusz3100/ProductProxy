@@ -41,6 +41,7 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
         List<PhraseFound> byPhraseAndReasoning = originalRepo.findByPhrase(pf.getPhrase());
 
         if (byPhraseAndReasoning == null || byPhraseAndReasoning.size() == 0) {
+            pf.getPhraseFoundProductType().forEach(phraseFoundProductType -> phraseFoundProductType.setBasePhrase(pf));
             originalRepo.save(pf);
           //  originalRepo.flush();
         }else{
