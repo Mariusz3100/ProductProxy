@@ -12,6 +12,7 @@ import mariusz.ambroziak.kassistant.hibernate.cache.repositories.MorrisonsRespon
 import mariusz.ambroziak.kassistant.utils.ProblemLogger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -144,13 +145,21 @@ public class MorrisonsClientService {
     public List<Morrisons_Product> searchInDbAndApiFor(String phrase){
         String[] phraseSplit=phrase.split(" ");
         List<Morrisons_Product> retValue=new ArrayList<>();
-        Arrays.asList(phraseSplit).forEach(s->retValue.addAll(this.morrisonProductRepository.findByNameContainingIgnoreCase(s)));
-
-        if(retValue.isEmpty()){
+//        Arrays.asList(phraseSplit).forEach(s->retValue.addAll(this.morrisonProductRepository.findByNameContainingIgnoreCase(s)));
+//
+//        if(retValue.isEmpty()){
             retValue.addAll(this.searchInApiFor(phrase));
+            try {
+                retValue.forEach(mp-> saveMorrisonsProduct(mp));
 
-            retValue.forEach(mp-> saveMorrisonsProduct(mp));
-        }
+            }catch (Exception psqlException){
+                if(psqlException.getMessage().contains("could not execute statement; SQL [n/a]; constraint [uniqueurl]")){
+                    System.out.print("double unique url ignored");
+                }else {
+                    psqlException.printStackTrace();
+                }
+            }
+//        }
 
         return retValue;
 
@@ -168,7 +177,10 @@ public class MorrisonsClientService {
 
         for(Morrisons_Response mr:byStartingWith){
             Morrisons_Product product = parseResponseIntoProductObject(mr.getUrl(), mr.getResponse());
-            this.morrisonProductRepository.save(product);
+
+            if(this.morrisonProductRepository.findByUrl(product.getUrl()).isEmpty()){
+                this.morrisonProductRepository.save(product);
+            }
             retValue.add(product);
         }
 
