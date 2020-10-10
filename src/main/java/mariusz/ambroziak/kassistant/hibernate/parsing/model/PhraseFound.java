@@ -120,11 +120,18 @@ public class PhraseFound {
             phraseFoundProductType.addAll(baseTypes);
         }
 
-        return phraseFoundProductType;
+        return phraseFoundProductType==null?phraseFoundProductType:new HashSet<>();
 
     }
 
+    public Set<PhraseFoundProductType> getNonEmptyTypesFoundForPhraseAndBase() {
+        Set<PhraseFoundProductType> nonempty = getTypesFoundForPhraseAndBase().stream()
+                .filter(phraseFoundProductType1 -> phraseFoundProductType1.getProductType() != null && phraseFoundProductType1.getProductType().equals(ProductType.unknown))
+                .collect(Collectors.toSet());
 
+        return nonempty;
+
+    }
 
     public void setPhraseFoundProductType(Set<PhraseFoundProductType> phraseFoundProductType) {
         this.phraseFoundProductType = phraseFoundProductType;
@@ -146,44 +153,32 @@ public class PhraseFound {
         this.lemmatizationBase = lemmatizationBase;
     }
 
-    public ProductType getLeadingProductType(){
-        Set<PhraseFoundProductType> phraseFoundProductType = getTypesFoundForPhraseAndBase();
 
-        Map<ProductType, Long> occurenceMap = phraseFoundProductType
-                .stream().filter(p->p.getProductType()!=ProductType.unknown)
-                .collect(Collectors.groupingBy(p -> p.getProductType(), Collectors.counting()));
+    public  ProductType getWeightedNonEmptyLeadingProductTypeFromApis() {
+        return getWeightedNonEmptyLeadingProductType(PhraseFoundProductType_Scope.Phrase);
+    }
 
-        Optional<Map.Entry<ProductType, Long>> max = occurenceMap.entrySet()
-                .stream().max(Comparator.comparing(Map.Entry::getValue));
+    public  ProductType getWeightedNonEmptyLeadingProductTypeFromResults() {
+        return getWeightedNonEmptyLeadingProductType(PhraseFoundProductType_Scope.Result);
+    }
+    public  ProductType getWeightedNonEmptyLeadingProductType(PhraseFoundProductType_Scope scopeConsidered) {
+        Set<PhraseFoundProductType> nonempty = getTypesFoundForPhraseAndBase().stream()
+                .filter(phraseFoundProductType1 ->
+                        phraseFoundProductType1.getProductType() != null
+                                && phraseFoundProductType1.getProductType().equals(ProductType.unknown)
+                                && phraseFoundProductType1.getScope().equals(scopeConsidered))
+                .collect(Collectors.toSet());
 
-        if(max.isPresent()){
-            return max.get().getKey();
-        }else{
-            return ProductType.unknown;
-        }
 
+        ProductType weightedLeadingProductTypeFrom = getWeightedLeadingProductTypeFrom(nonempty);
+
+        return weightedLeadingProductTypeFrom==null?ProductType.unknown:weightedLeadingProductTypeFrom;
 
     }
 
-    public  ProductType getWeightedLeadingProductTypeFromApis() {
-        if(phraseFoundProductType!=null&&!phraseFoundProductType.isEmpty()) {
-            List<PhraseFoundProductType> phraseType = phraseFoundProductType.stream()
-                    .filter(phraseFoundProductType1 -> phraseFoundProductType1.getProductType()!=null&&phraseFoundProductType1.getScope().equals(PhraseFoundProductType_Scope.Phrase))
-                    .collect(Collectors.toList());
 
-            if (phraseType.stream().map(phraseFoundProductType1 -> phraseFoundProductType1.getProductType()).distinct().count() > 1) {
-                System.err.println("Conflicting api productTypes found in db for phraseFound: " + getPf_id());
-            } else {
-                if (!phraseType.isEmpty()) {
-                    return phraseType.get(0).getProductType();
-                }
-            }
-        }
-        return ProductType.unknown;
-
-    }
-    public  ProductType getWeightedLeadingProductTypeFromResults() {
-        ProductType weightedLeadingProductType = this.getWeightedLeadingProductTypeFromResults(getTypesFoundForPhraseAndBase());
+    public  ProductType getWeightedLeadingProductTypeFromAssociatedTypes() {
+        ProductType weightedLeadingProductType = this.getWeightedLeadingProductTypeFrom(getTypesFoundForPhraseAndBase());
         return weightedLeadingProductType;
     }
 
@@ -192,7 +187,7 @@ public class PhraseFound {
 
 
 
-        public static ProductType getWeightedLeadingProductTypeFromResults(Set<PhraseFoundProductType> phraseFoundProductType){
+    public static ProductType getWeightedLeadingProductTypeFrom(Collection<PhraseFoundProductType> phraseFoundProductType){
 
         Map<ProductType,Float> occurenceMap= new HashMap<>();
 
