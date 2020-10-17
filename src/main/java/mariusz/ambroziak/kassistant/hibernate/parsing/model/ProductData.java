@@ -34,7 +34,10 @@ public abstract class ProductData {
 
 
     public String getDepartmentList() {
-        return departmentList;
+        if(departmentList==null)
+            return department;
+        else
+            return departmentList;
     }
 
     public void setDepartmentList(String departmentList) {

@@ -219,11 +219,11 @@ public class MorrisonsClientService {
 
         JSONObject product = root.getJSONObject("product");
         String sku=product.getString("sku");
-        String name = product.getString("name");
+        String name = product.getString("name").trim();
 
-        String brand = product.getJSONObject("brand").getString("name");
+        String brand = product.getJSONObject("brand").getString("name").trim();
 
-        String categoryList = product.getString("mainCategory");
+        String categoryList = product.getString("mainCategory").trim();
         String[] split = categoryList.split(MetadataConstants.departmentListSeparator);
         String lastCategory=split[split.length-1];
 
@@ -233,7 +233,7 @@ public class MorrisonsClientService {
         JSONObject bopFields = backOfPack.getJSONObject("bopFields");
         String ingredients = "";
         if(bopFields.has("ingredients")) {
-            ingredients=bopFields.getJSONArray("ingredients").getJSONObject(0).getString("content");
+            ingredients=bopFields.getJSONArray("ingredients").getJSONObject(0).getString("content").trim();
         }
         String description="";
         if(bopFields.has("description")) {

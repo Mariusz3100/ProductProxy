@@ -62,7 +62,7 @@ public class CustomStatsRepositoryImpl implements CustomStatsRepository {
             System.err.println("Empty token for Word class provided");
 
         if(!Pattern.matches(lettersRegex,token.getText()))
-            throw new IllegalArgumentException("Text for Word class contains illegal characters: "+ token.getText());
+            System.err.println("Text for Word class contains illegal characters: "+ token.getText());
 
 
 

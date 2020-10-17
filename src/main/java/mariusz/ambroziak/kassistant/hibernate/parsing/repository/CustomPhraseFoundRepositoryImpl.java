@@ -102,7 +102,12 @@ public class CustomPhraseFoundRepositoryImpl implements CustomPhraseFoundReposit
 
 
         for(PhraseFound pf:pfs){
-            this.saveIfNew(pf);
+
+            try{
+                this.saveIfNew(pf);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

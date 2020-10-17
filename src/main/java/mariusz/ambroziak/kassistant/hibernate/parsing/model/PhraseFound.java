@@ -120,7 +120,7 @@ public class PhraseFound {
             phraseFoundProductType.addAll(baseTypes);
         }
 
-        return phraseFoundProductType==null?phraseFoundProductType:new HashSet<>();
+        return phraseFoundProductType==null?new HashSet<>():phraseFoundProductType;
 
     }
 
@@ -165,7 +165,7 @@ public class PhraseFound {
         Set<PhraseFoundProductType> nonempty = getTypesFoundForPhraseAndBase().stream()
                 .filter(phraseFoundProductType1 ->
                         phraseFoundProductType1.getProductType() != null
-                                && phraseFoundProductType1.getProductType().equals(ProductType.unknown)
+                                && !phraseFoundProductType1.getProductType().equals(ProductType.unknown)
                                 && phraseFoundProductType1.getScope().equals(scopeConsidered))
                 .collect(Collectors.toSet());
 
