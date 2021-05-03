@@ -15,6 +15,7 @@ import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -43,58 +44,76 @@ public class RecipeSearchApiClient extends RapidApiClient {
 	@Autowired
 	RecipeDetailsApiClient recipeDetailsApiClient;
 
+	@Value("${apis.used.recipe}")
+	private String useRecipeApi;
+	private boolean doWeUseRecipeApi(){
+		if(this.useRecipeApi!=null&&this.useRecipeApi.equalsIgnoreCase("true")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public List<IngredientLearningCase> getAndSaveIngredientsForRecipe(String recipeId){
-		String baseUrl = RecipeDetailsApiClient.baseUrl;
-		String url=baseUrl.replaceAll("__id__",recipeId);
-		List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
+		if(doWeUseRecipeApi()) {
 
-		ingredientPhraseLearningCaseRepository.saveAll(ingredientCasesForRecipe);
+			String baseUrl = RecipeDetailsApiClient.baseUrl;
+			String url = baseUrl.replaceAll("__id__", recipeId);
+			List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
+
+			ingredientPhraseLearningCaseRepository.saveAll(ingredientCasesForRecipe);
 
 
-		return ingredientCasesForRecipe;
+			return ingredientCasesForRecipe;
+		}else {
+			return new ArrayList<>();
+		}
 	}
 
 
 	public List<IngredientLearningCase> getandSaveIngredientsFor(String phrase){
-		List<Integer> ids=getPotentianIds(phrase);
-		List<IngredientLearningCase> retValue=new ArrayList<>();
-		for(Integer id:ids){
-			String baseUrl = RecipeDetailsApiClient.baseUrl;
-			String url=baseUrl.replaceAll("__id__",id.toString());
-			List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
+		List<IngredientLearningCase> retValue = new ArrayList<>();
+		if(doWeUseRecipeApi()) {
+			List<Integer> ids = getPotentianIds(phrase);
+			for (Integer id : ids) {
+				String baseUrl = RecipeDetailsApiClient.baseUrl;
+				String url = baseUrl.replaceAll("__id__", id.toString());
+				List<IngredientLearningCase> ingredientCasesForRecipe = recipeDetailsApiClient.getIngredientCasesForRecipe(url);
 
-			List<IngredientLearningCase> toSave=new ArrayList<>();
-			ingredientCasesForRecipe.forEach(ilc-> {
-				if(ilc.getOriginalPhrase().toLowerCase().indexOf(phrase.toLowerCase())>0)
-					toSave.add(ilc);
+				List<IngredientLearningCase> toSave = new ArrayList<>();
+				ingredientCasesForRecipe.forEach(ilc -> {
+					if (ilc.getOriginalPhrase().toLowerCase().indexOf(phrase.toLowerCase()) > 0)
+						toSave.add(ilc);
 
 				});
-			Iterable<IngredientLearningCase> ingredientLearningCases = ingredientPhraseLearningCaseRepository.saveAll(toSave);
+				Iterable<IngredientLearningCase> ingredientLearningCases = ingredientPhraseLearningCaseRepository.saveAll(toSave);
 
-			retValue.addAll(toSave);
+				retValue.addAll(toSave);
+			}
 		}
-
 		return retValue;
 	}
 
 
 	private String getProxiedResponse(String phrase) {
+		if(doWeUseRecipeApi()) {
+			List<WebknoxResponse> byQuery = this.webknoxResponseRepository.findByQuery(phrase);
 
-		List<WebknoxResponse> byQuery = this.webknoxResponseRepository.findByQuery(phrase);
+			if (byQuery == null || byQuery.isEmpty()) {
+				String response = getResponse(phrase);
+				if (response != null && !response.trim().isEmpty()) {
+					WebknoxResponse wkr = new WebknoxResponse();
+					wkr.setQuery(phrase);
+					wkr.setResponse(response);
 
-		if(byQuery==null||byQuery.isEmpty()){
-			String response = getResponse(phrase);
-			if(response!=null&&!response.trim().isEmpty()) {
-				WebknoxResponse wkr = new WebknoxResponse();
-				wkr.setQuery(phrase);
-				wkr.setResponse(response);
-
-				this.webknoxResponseRepository.save(wkr);
+					this.webknoxResponseRepository.save(wkr);
+				}
+				return response;
+			} else {
+				return byQuery.get(0).getResponse();
 			}
-			return response;
-		}else {
-			return byQuery.get(0).getResponse();
+		}else{
+			return "";
 		}
 	}
 
@@ -140,16 +159,17 @@ public class RecipeSearchApiClient extends RapidApiClient {
 		
 		String response=getProxiedResponse(phrase);
 
-		JSONObject root=new JSONObject(response);
+		if(response!=null&&!response.isEmpty()) {
+			JSONObject root = new JSONObject(response);
 
-		JSONArray results = root.getJSONArray("results");
+			JSONArray results = root.getJSONArray("results");
 
-		for(int i=0;i<results.length();i++){
-			JSONObject jsonObject = results.getJSONObject(i);
-			int id = jsonObject.getInt("id");
-			retValue.add(id);
+			for (int i = 0; i < results.length(); i++) {
+				JSONObject jsonObject = results.getJSONObject(i);
+				int id = jsonObject.getInt("id");
+				retValue.add(id);
+			}
 		}
-
 		return  retValue;
 
 	}

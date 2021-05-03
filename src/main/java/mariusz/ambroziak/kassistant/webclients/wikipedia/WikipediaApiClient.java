@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.sun.jersey.api.client.Client;
@@ -23,8 +24,21 @@ public class WikipediaApiClient {
 	@Autowired
 	WikipediaResponseRepository wikipediaResponseRepository;
 
+	@Value("${apis.used.wikipedia}")
+	private String useWikipediaApi;
+
+
+	private boolean doWeUseWikipediaApi(){
+		if(this.useWikipediaApi!=null&&this.useWikipediaApi.equalsIgnoreCase("true")){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+
 	public String getRedirectIfAny(String original) {
-		if(original.equals("")) {
+		if(original.equals("")||!doWeUseWikipediaApi()) {
 			return "";
 		}
 		if(original.endsWith(".")) {

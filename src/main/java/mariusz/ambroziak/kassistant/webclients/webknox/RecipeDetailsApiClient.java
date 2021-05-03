@@ -14,6 +14,7 @@ import mariusz.ambroziak.kassistant.webclients.rapidapi.RapidApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,6 +30,17 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 
 	@Autowired
 	WebknoxResponseRepository webknoxResponseRepository;
+
+
+	@Value("${apis.used.recipe}")
+	private String useRecipeApi;
+	private boolean doWeUseRecipeApi(){
+		if(this.useRecipeApi!=null&&this.useRecipeApi.equalsIgnoreCase("true")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	private static String getResponseForUrl(String url) {
 		ClientConfig cc = new DefaultClientConfig();
@@ -77,39 +89,46 @@ public class RecipeDetailsApiClient extends RapidApiClient {
 
 	public List<IngredientLearningCase> getIngredientCasesForRecipe(String url) {
 		List<IngredientLearningCase> retValue=new ArrayList<>();
+		if(doWeUseRecipeApi()) {
 
-		
-		String response= getProxiedResponse(url);
-		if(response!=null||!response.isEmpty()) {
-			List<IngredientLearningCase> ingredientLearningCases = parseResponseIntoIngredientCases(response);
-			retValue.addAll(ingredientLearningCases);
+
+			String response = getProxiedResponse(url);
+			if (response != null || !response.isEmpty()) {
+				List<IngredientLearningCase> ingredientLearningCases = parseResponseIntoIngredientCases(response);
+				retValue.addAll(ingredientLearningCases);
+			}
 		}
 		return  retValue;
+
 
 	}
 
 	public List<IngredientLearningCase> parseResponseIntoIngredientCases(String response) {
-		JSONObject root=new JSONObject(response);
 		List<IngredientLearningCase> retValue=new ArrayList<>();
 
-		JSONArray results = root.getJSONArray("extendedIngredients");
+		if(doWeUseRecipeApi()) {
 
-		for(int i=0;i<results.length();i++){
-			JSONObject jsonObject = results.getJSONObject(i);
-			String originalString = jsonObject.getString("originalString");
-			String original = jsonObject.getString("originalString");
-			if(!original.equals(originalString)){
-				System.err.println("originals do not match");
-			}else{
-				String result = jsonObject.getString("originalName");
-				float amount = jsonObject.getFloat("amount");
-				String unit = jsonObject.getString("unit");
+			JSONObject root = new JSONObject(response);
 
-				IngredientLearningCase ilc = new IngredientLearningCase(original, amount, unit, result, ProductType.unknown);
-				ilc.setSource("Webknox");
-				retValue.add(ilc);
+			JSONArray results = root.getJSONArray("extendedIngredients");
+
+			for (int i = 0; i < results.length(); i++) {
+				JSONObject jsonObject = results.getJSONObject(i);
+				String originalString = jsonObject.getString("originalString");
+				String original = jsonObject.getString("originalString");
+				if (!original.equals(originalString)) {
+					System.err.println("originals do not match");
+				} else {
+					String result = jsonObject.getString("originalName");
+					float amount = jsonObject.getFloat("amount");
+					String unit = jsonObject.getString("unit");
+
+					IngredientLearningCase ilc = new IngredientLearningCase(original, amount, unit, result, ProductType.unknown);
+					ilc.setSource("Webknox");
+					retValue.add(ilc);
 
 
+				}
 			}
 		}
 

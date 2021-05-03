@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriUtils;
 
@@ -25,6 +26,16 @@ public class WordsApiClient extends RapidApiClient {
 	private static final String typeOfSuffix="/typeOf";
 	
 	private static final String header1Value="wordsapiv1.p.rapidapi.com";
+
+	@Value("${apis.used.words}")
+	private String useWordsApi;
+	private boolean doWeUseWordsApi(){
+		if(this.useWordsApi!=null&&this.useWordsApi.equalsIgnoreCase("true")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	//https://dev.tescolabs.com/grocry/products/?query=cucumber&offset=0&limit=10
 	private String getResponse(String url) throws WordNotFoundException {
 		ClientConfig cc = new DefaultClientConfig();
@@ -52,39 +63,36 @@ public class WordsApiClient extends RapidApiClient {
 		return response1;
 	}
 
-	
+
 	
 	public ArrayList<WordsApiResult> searchFor(String phrase)  {
-		String url = baseUrl+UriUtils.encodePath(phrase, java.nio.charset.StandardCharsets.UTF_8.toString());
-		
-		
-		//System.out.println("Retrieved: "+url);
-		if(phrase==null||phrase.equals(""))
-			return new ArrayList<WordsApiResult>();
-		try {
-		String response=getResponse(url);
+		if(doWeUseWordsApi()) {
+			String url = baseUrl + UriUtils.encodePath(phrase, java.nio.charset.StandardCharsets.UTF_8.toString());
+			if (phrase == null || phrase.equals(""))
+				return new ArrayList<WordsApiResult>();
+			try {
+				String response = getResponse(url);
+				ArrayList<WordsApiResult> retValue = new ArrayList<WordsApiResult>();
+				JSONObject jsonRoot = new JSONObject(response);
+				try {
+					String baseWord = jsonRoot.getString("word");
+					if (jsonRoot.has("results")) {
+						JSONArray resultsArray = jsonRoot.getJSONArray("results");
 
-		
-		ArrayList<WordsApiResult> retValue=new ArrayList<WordsApiResult>();
-		JSONObject jsonRoot=new JSONObject(response);
-		try {
-			String baseWord=jsonRoot.getString("word");
-			if(jsonRoot.has("results")) {
-				JSONArray resultsArray = jsonRoot.getJSONArray("results");
-
-				for(int i=0;i<resultsArray.length();i++) {
-					JSONObject jsonSingleResult = resultsArray.getJSONObject(i);
-					WordsApiResult parsingResult = parseSingleJsonIntoWordObj(phrase, baseWord, jsonSingleResult);
-					retValue.add(parsingResult);
-
-
+						for (int i = 0; i < resultsArray.length(); i++) {
+							JSONObject jsonSingleResult = resultsArray.getJSONObject(i);
+							WordsApiResult parsingResult = parseSingleJsonIntoWordObj(phrase, baseWord, jsonSingleResult);
+							retValue.add(parsingResult);
+						}
+					}
+				} catch (JSONException e) {
+					System.err.println("Problem parsing words api response for " + phrase);
 				}
+				return retValue;
+			} catch (WordNotFoundException e) {
+				return new ArrayList<WordsApiResult>();
 			}
-		}catch(JSONException e) {
-			System.err.println("Problem parsing words api response for "+phrase);
-		}
-		return retValue;
-		}catch(WordNotFoundException e) {
+		}else{
 			return new ArrayList<WordsApiResult>();
 		}
 

@@ -12,6 +12,7 @@ import mariusz.ambroziak.kassistant.webclients.wikipedia.Wikipedia_Response;
 import mariusz.ambroziak.kassistant.webclients.wordsapi.WordNotFoundException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.sun.jersey.api.client.Client;
@@ -29,6 +30,9 @@ public class ConvertApiClient extends RapidApiClient {
 
 	public static final String baseUrl="https://community-neutrino-currency-conversion.p.rapidapi.com/convert";
 	private static final String header1Value="community-neutrino-currency-conversion.p.rapidapi.com";
+
+	@Value("${apis.used.convert}")
+	private String useConvertApi;
 
 	@Autowired
 	ConvertApi_ResponseRepository convertApi_responseRepository;
@@ -67,41 +71,47 @@ public class ConvertApiClient extends RapidApiClient {
 		return response1;
 	}
 
-
+	private boolean doWeUseConvertApi(){
+		if(this.useConvertApi!=null&&this.useConvertApi.equalsIgnoreCase("true")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public QuantityTranslation checkForTranslation(String phrase) throws WordNotFoundException {
-		QuantityTranslation fromLocalCache=checkLocalCache(phrase);
-		if(fromLocalCache!=null)
-			return fromLocalCache;
-		
-		String response=getProxiedResponse(phrase, AmountTypes.mg);
+		if(doWeUseConvertApi()) {
 
-	//	System.out.println(response);
-		if(response!=null&&!response.isEmpty()) {
-			JSONObject json=new JSONObject(response);
-			String double1 = json.getString("result");
-			if(!double1.isEmpty()) {
-				float f=Float.parseFloat(double1);
-				return new QuantityTranslation(AmountTypes.mg, f);
+			QuantityTranslation fromLocalCache = checkLocalCache(phrase);
+			if (fromLocalCache != null)
+				return fromLocalCache;
+
+			String response = getProxiedResponse(phrase, AmountTypes.mg);
+
+			//	System.out.println(response);
+			if (response != null && !response.isEmpty()) {
+				JSONObject json = new JSONObject(response);
+				String double1 = json.getString("result");
+				if (!double1.isEmpty()) {
+					float f = Float.parseFloat(double1);
+					return new QuantityTranslation(AmountTypes.mg, f);
+				}
+			}
+
+			response = getProxiedResponse(phrase, AmountTypes.ml);
+
+			//	System.out.println(response);
+			if (response != null && !response.isEmpty()) {
+				JSONObject json = new JSONObject(response);
+				String double1 = json.getString("result");
+				if (!double1.isEmpty()) {
+
+					float f = Float.parseFloat(double1);
+					return new QuantityTranslation(AmountTypes.ml, f);
+				}
 			}
 		}
-
-		response=getProxiedResponse(phrase, AmountTypes.ml);
-
-	//	System.out.println(response);
-		if(response!=null&&!response.isEmpty()) {
-			JSONObject json=new JSONObject(response);
-			String double1 = json.getString("result");
-			if(!double1.isEmpty()) {
-
-				float f=Float.parseFloat(double1);
-				return new QuantityTranslation(AmountTypes.ml, f);
-			}
-		}
-
-
 		return null;
-
 
 	}
 
